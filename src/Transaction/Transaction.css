@@ -1,0 +1,40 @@
+form {
+    margin: 3em;
+}
+
+#amount, #transaction-type, #submit {
+    outline: none;
+    margin: 1em;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #555555;
+    padding: 12px 10px;
+}
+
+#amount {
+    width: 20%;
+    display: inline-block;
+    -webkit-transition: 0.5s;
+}
+
+#amount:focus {
+    border: 1px solid #1289A7;
+}
+
+#transaction-type {
+    height: 43px;
+    width: 10%;
+}
+
+#submit {
+    width: 7%;
+    -webkit-transition: 0.2s;
+}
+
+#submit:hover {
+    cursor: pointer;
+    background-color: #1289A7;
+    border: 1px solid #1289A7;
+    color: #FFFFFF;
+}

@@ -1,0 +1,11 @@
+#outer {
+    margin-top: 1em;
+    width: 100%;
+    text-align: center;
+}
+
+span {
+    margin-top: 1em;
+    color: #555555;
+    padding: 1em;
+}
