@@ -13,7 +13,19 @@ describe('accountService', () => {
 
     describe('getAccountBalance', async () => {
         it('should get account balance from API', async function () {
-            const resp = {"amount":5000000.0,"currency":"IDR"};
+            const resp = {
+                "accountId": "A00000001",
+                "customer": {
+                    "customerId": "C00000001",
+                    "name": "Dj",
+                    "info": "chip",
+                    "disabled": false
+                },
+                "balance": {
+                    "amount": 5000000,
+                    "currency": "IDR"
+                }
+            };
             axios.get.mockImplementationOnce(() => Promise.resolve({
                 status: 200,
                 data: resp
@@ -24,14 +36,26 @@ describe('accountService', () => {
             let result = await testAccount.getAccount();
 
             expect(result.status).toBe(200);
-            expect(result.data.amount).toBe(5000000.0);
-            expect(result.data.currency).toBe("IDR");
+            expect(result.data.balance.amount).toBe(5000000.0);
+            expect(result.data.balance.currency).toBe("IDR");
         });
     });
 
     describe('getCustomerInfo', async () => {
         it('should fetch info of customer account from API', async function () {
-            const resp = {"customerId":"C00000001","name":"nofanto","info":"chip","disabled":false};
+            const resp = {
+                "accountId": "A00000001",
+                "customer": {
+                    "customerId": "C00000001",
+                    "name": "Dj",
+                    "info": "chip",
+                    "disabled": false
+                },
+                "balance": {
+                    "amount": 5000000,
+                    "currency": "IDR"
+                }
+            };
             axios.get.mockImplementationOnce(() => Promise.resolve({
                 status: 200,
                 data: resp
@@ -42,8 +66,8 @@ describe('accountService', () => {
             let result = await testAccount.getAccount();
 
             expect(result.status).toBe(200);
-            expect(result.data.customerId).toBe("C00000001");
-            expect(result.data.name).toBe("nofanto");
+            expect(result.data.customer.customerId).toBe("C00000001");
+            expect(result.data.customer.name).toBe("Dj");
         });
     });
 
