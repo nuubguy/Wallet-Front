@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import './Dashboard.css'
 import Formatter from "../Utilities/Formatter";
+import TransactionList from "./TransactionList";
 
 /*
     This class represent view of homepage of a customer
@@ -8,11 +9,17 @@ import Formatter from "../Utilities/Formatter";
 
 export default class Dashboard extends Component {
     render() {
-        const {customer} = this.props;
+        const {customer, transactions} = this.props;
         return (
             <div id="dashboard">
-                <h3 id="customer-name">Hello, {customer.name}</h3>
-                <h1 id="customer-balance">{Formatter.currencyFormatter(customer.balance)}</h1>
+                <section id="header">
+                    <h3 className="customer-name animation-typewriter">Hello, {customer.name}</h3>
+                    <h1 id="customer-balance">{Formatter.currencyFormatter(customer.account.amount)}</h1>
+                </section>
+
+                <section id="transaction-list">
+                    <TransactionList transactions={transactions}/>
+                </section>
             </div>
         )
     }

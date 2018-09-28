@@ -6,17 +6,14 @@ import Endpoint from "../Api/Endpoint";
 import Customer from "../Utilities/Customer";
 
 describe('DashboardContainer', () => {
-    function setup() {
+    function renderDashboardContainer() {
         return shallow(<DashboardContainer />);
     }
 
     describe('render', () => {
-        it('render without crashing', () => {
-            setup();
-        });
-
         it('should has dashboard container component', () => {
-            expect(setup().find('Dashboard').length).toBe(1);
+            const dashBoardContainer = renderDashboardContainer();
+            expect(dashBoardContainer.find('Dashboard').length).toBe(1);
         })
     });
 
@@ -24,7 +21,7 @@ describe('DashboardContainer', () => {
         it('call axios GET API', async () => {
             let spy = jest.spyOn(mockAxios, "get");
 
-            setup();
+            renderDashboardContainer();
 
             await Promise.resolve();
 
@@ -34,7 +31,7 @@ describe('DashboardContainer', () => {
         it('call axios GET API with endpoint', async () => {
             let spy = jest.spyOn(mockAxios, "get");
 
-            setup();
+            renderDashboardContainer();
 
             await Promise.resolve();
 

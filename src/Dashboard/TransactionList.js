@@ -13,7 +13,7 @@ export default class TransactionList extends Component {
             <table id={"last-five-transactions"}>
                 <thead>
                 <tr>
-                    <th>Wallet Id</th>
+                    <th>Transaction Id</th>
                     <th>Transaction Type</th>
                     <th>Amount</th>
                     <th>Date</th>
@@ -22,11 +22,11 @@ export default class TransactionList extends Component {
                 <tbody>
                 {
                     transactions.map(transaction => (
-                        <tr key={transaction.date}>
-                            <td>{transaction.customer.wallet.id}</td>
-                            <td>{transaction.type}</td>
-                            <td>{Formatter.currencyFormatter(transaction.nominal)}</td>
-                            <td>{Formatter.dateFormatter(transaction.date)}</td>
+                        <tr key={transaction.dateTime}>
+                            <td>{transaction.transactionId}</td>
+                            <td>{transaction.transactionType}</td>
+                            <td>{Formatter.currencyFormatter(transaction.amount)}</td>
+                            <td>{Formatter.dateFormatter(transaction.dateTime)}</td>
                         </tr>
                     ))
                 }

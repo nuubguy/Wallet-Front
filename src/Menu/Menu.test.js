@@ -3,29 +3,38 @@ import { shallow } from 'enzyme';
 import Menu from "./Menu";
 
 describe('Menu', () => {
+    function renderMenu() {
+        return shallow(<Menu  />);
+    }
+
     describe('render', () => {
-        it('should has 2 menu', () => {
-            const render = shallow(<Menu  />);
-            expect(render.find('li').length).toEqual(2);
+        it('should has two menu', () => {
+            const menu = renderMenu();
+            expect(menu.find('li').length).toEqual(2);
         });
 
-        it('should has 2 routes', () => {
-           const render = shallow(<Menu />);
-           expect(render.find('Route').length).toEqual(2);
+        it('should has two routes', () => {
+            const menu = renderMenu();
+           expect(menu.find('Route').length).toEqual(2);
         });
 
         it('should has dashboard route', () => {
-            const render = shallow(<Menu />);
-            const routes = render.find('Route');
+            const menu = renderMenu();
+            const routes = menu.find('Route');
 
             expect(routes.at(0).props().path).toEqual('/dashboard');
         });
 
         it('should has transaction route', () => {
-            const render = shallow(<Menu />);
-            const routes = render.find('Route');
+            const menu = renderMenu();
+            const routes = menu.find('Route');
 
             expect(routes.at(1).props().path).toEqual('/transaction');
+        });
+
+        it('should has logo', () => {
+            const menu = renderMenu();
+            expect(menu.find('.logo').length).toEqual(1);
         });
     });
 });
