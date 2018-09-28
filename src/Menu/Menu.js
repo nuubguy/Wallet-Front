@@ -17,14 +17,19 @@ export default class Menu extends Component {
                 <header>
                     <ul>
                         <li>
-                            <Link to="/dashboard" className={"link"}><FontAwesomeIcon icon="home"/> Dashboard</Link>
+                            <Link to="/dashboard" className={"link"}><FontAwesomeIcon icon="home"/> Home</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="money-bill-wave"/> Transaction</Link>
+                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="money-bill-wave"/> Withdraw</Link>
+                        </li>
+                        <li>
+                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-in-alt"/> Top Up</Link>
+                        </li>
+                        <li>
+                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-out-alt"/> Transafer</Link>
                         </li>
                     </ul>
 
-                    <hr/>
                 </header>
 
                 <Route path="/dashboard" render={() => (<DashboardContainer/>)}/>

@@ -4,10 +4,22 @@
 
 export default class Customer {
     static id() {
-        return 1;
+        return 'C00000001';
     }
 
-    static defaultTransactionType() {
-        return 'credit';
+    static accountId() {
+        return 'A00000001';
+    }
+
+    static name() {
+        return 'Dj';
+    }
+
+    static info() {
+        return 'Chip';
+    }
+
+    static currency() {
+        return 'IDR';
     }
 }

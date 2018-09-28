@@ -1,0 +1,27 @@
+#last-five-transactions {
+    background-color: #FFFFFF;
+}
+
+#last-five-transactions, th, td {
+    border-bottom: 1px solid #ddd;
+    border-collapse: collapse;
+    padding: 1em;
+}
+
+#last-five-transactions {
+    width: 100%;
+    text-align: center;
+}
+
+th {
+    background-color: #0fb9b1;
+    color: #FFFFFF;
+}
+
+td {
+    color: #555555;
+}
+
+#last-five-transactions tr:hover {
+    background-color: #86e0dc;
+}

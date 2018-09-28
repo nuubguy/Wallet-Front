@@ -3,15 +3,15 @@
  */
 
 export default class Endpoint {
-    static getCustomer(id) {
-        return 'http://localhost:8080/customers/' + id;
+    static baseUrl() {
+        return 'http://localhost:8080';
     }
 
-    static postTransaction(transactionType, id) {
-        return 'http://localhost:8080/transaction/' + transactionType + "/" + id;
-    }
-
-    static getLastFiveTransactions(id) {
-        return 'http://localhost:8080/transaction/last-five/' + id;
-    }
+    // static postTransaction() {
+    //     return 'http://localhost:8080/transactions';
+    // }
+    //
+    // static getLastFiveTransactions(id) {
+    //     return 'http://localhost:8080/transactions/?accountId=' + id + '&limitResultFromLatest=5';
+    // }
 }

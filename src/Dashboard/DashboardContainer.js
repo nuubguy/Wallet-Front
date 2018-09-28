@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import Dashboard from "./Dashboard";
 import Customer from "../Utilities/Customer";
-import DashboardApiService from "./DashboardApiService";
+import AccountService from "../Api/AccountService";
+import Endpoint from "../Api/Endpoint";
 
 /*
     This class represent logic to serve Dashboard class
@@ -12,36 +13,45 @@ export default class DashboardContainer extends Component {
         super();
         this.state = {
             customer: {
-                name: '',
-                balance: ''
-            }
+                account: {
+                    amount: '',
+                    currency: ''
+                },
+                name: ''
+            },
+            transactions: [],
+            service: ''
         }
     }
 
     render() {
         return (
             <div>
-                <Dashboard customer={this.state.customer}/>
+                <Dashboard customer={this.state.customer} transactions={this.state.transactions}/>
             </div>
         )
     }
 
-    async componentDidMount() {
-        await this.getCustomerData();
+    componentDidMount() {
+        const service = new AccountService(Customer.id(), Customer.accountId(), Endpoint.baseUrl());
+
+        this.getCustomerData(service);
+        this.getLastFiveTransaction(service);
     }
 
-    getCustomerData() {
-        DashboardApiService.fetchCustomer(Customer.id())
-            .then((response) => {
-                this.updateCustomerInfo(response);
-            });
-    }
+    async getCustomerData(service) {
+        const response = await service.getAccount();
 
-    updateCustomerInfo(response) {
         let customer = Object.assign({}, this.state.customer);
-        customer.name = response.name;
-        customer.balance = response.wallet.balance;
+        customer.name =response.data.customer.name;
+        customer.account.amount = response.data.balance.amount;
+        customer.account.currency = response.data.balance.currency;
 
         this.setState({customer});
+    }
+
+    async getLastFiveTransaction(service) {
+        const response = await service.getTransactionList();
+        this.setState({transactions: response.data});
     }
 }

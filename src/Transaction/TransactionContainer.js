@@ -1,10 +1,8 @@
 import Transaction from "./Transaction";
 import React, {Component} from "react";
-import TransactionApiService from "./TransactionApiService";
-import TransactionList from "./TransactionList";
+import TransactionList from "../Dashboard/TransactionList";
 import Customer from "../Utilities/Customer";
 import TransactionStatus from "./TransactionStatus";
-import Message from "../Utilities/Message";
 
 /*
     This class represent logic to serve Transaction, TransactionList, and TransactionStatus class
@@ -15,11 +13,15 @@ export default class TransactionContainer extends Component {
         super();
         this.state = {
             transaction: {
-                customer: {
-                    id: Customer.id()
-                },
-                type: Customer.defaultTransactionType(),
-                amount: '',
+                transactionId: null,
+                debit: '',
+                credit: '',
+                dateTime: null,
+                transactionAmount:
+                    {
+                        amount: '',
+                        currency: '',
+                    }
             },
             transactions: [],
             transactionStatus: ''
@@ -46,36 +48,66 @@ export default class TransactionContainer extends Component {
 
     onAmountChange = (amount) => {
         let transaction = Object.assign({}, this.state.transaction);
-        transaction.amount = amount;
+        transaction.transactionAmount.amount = amount;
         this.setState({transaction});
     };
 
     onTypeChange = (type) => {
         let transaction = Object.assign({}, this.state.transaction);
-        transaction.type = type;
+        if(type === 'debit') {
+            transaction.debit =  {
+                accountId: Customer.accountId(),
+                customer:
+                    {
+                        customerId: Customer.id(),
+                        name: Customer.name(),
+                        info: Customer.info(),
+                        disabled: false
+                    },
+                balance:
+                    {
+                        amount: '',
+                        currency: Customer.currency()
+                    }
+            }
+        } else {
+            transaction.credit = {
+                accountId: Customer.accountId(),
+                customer:
+                    {
+                        customerId: Customer.id(),
+                        name: Customer.name(),
+                        info: Customer.info(),
+                        disabled: false
+                    },
+                balance:
+                    {
+                        amount: '',
+                        currency: "IDR"
+                    }
+            }
+        }
         this.setState({transaction});
     };
 
     onFormSubmit = (event) => {
-        event.preventDefault();
-        TransactionApiService.postTransaction(this.state.transaction, Customer.id())
-            .then(() => {
-                this.setState({transactionStatus: Message.TransactionSuccess()});
-                this.componentDidMount();
-            })
-            .catch(() => {
-                this.setState({transactionStatus: Message.TransactionFail()});
-            });
+        // event.preventDefault();
+        // console.log(this.state.transactions);
+        // TransactionApiService.postTransaction(this.state.transaction)
+        //     .then(() => {
+        //         this.setState({transactionStatus: Message.TransactionSuccess()});
+        //         this.componentDidMount();
+        //     })
+        //     .catch(() => {
+        //         this.setState({transactionStatus: Message.TransactionFail()});
+        //     });
     };
 
     componentDidMount() {
-        TransactionApiService.getLastFiveTransactions(Customer.id())
-            .then((response) => {
-                this.setNewState(response)
-            });
-    }
-
-    setNewState(response) {
-        this.setState({transactions: response});
+        // TransactionApiService.getLastFiveTransactions(Customer.accountId())
+        //     .then((response) => {
+        //         this.setState({transactions: response});
+        //         console.log(response);
+        //     });
     }
 }

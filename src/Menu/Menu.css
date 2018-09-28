@@ -1,20 +1,30 @@
 header {
-    background-color: #22a6b3;
+    background-color: #0fb9b1;
+    display: flex;
+    align-items: center;
 }
 ul {
-    background-color: #22a6b3;
+    background-color: #0fb9b1;
     list-style-type: none;
     overflow: hidden;
+    padding: 20px;
 }
 
 li {
     float: left;
-    margin-right: 2em;
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-right: 3em;
 }
 
 .link {
     text-decoration: none;
     color: #FFFFFF;
+}
+
+.link:hover {
+    font-weight: bold;
+}
+
+img {
+    width: 80px;
+    height: 80px;
 }
