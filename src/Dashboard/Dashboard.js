@@ -14,7 +14,7 @@ export default class Dashboard extends Component {
             <div id="dashboard">
                 <section id="header">
                     <h3 className="customer-name animation-typewriter">Hello, {customer.name}</h3>
-                    <h1 id="customer-balance">{Formatter.currencyFormatter(customer.account.amount)}</h1>
+                    <h1 id="customer-balance">{Formatter.currencyFormatter(customer.account.amount) + " " + customer.account.currency}</h1>
                 </section>
 
                 <section id="transaction-list">

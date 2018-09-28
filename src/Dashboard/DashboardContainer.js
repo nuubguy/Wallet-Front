@@ -40,11 +40,12 @@ export default class DashboardContainer extends Component {
     }
 
     async getCustomerData(service) {
-        const response = await service.getCustomerInfo();
+        const response = await service.getAccount();
 
         let customer = Object.assign({}, this.state.customer);
         customer.name =response.data.customer.name;
         customer.account.amount = response.data.balance.amount;
+        customer.account.currency = response.data.balance.currency;
 
         this.setState({customer});
     }

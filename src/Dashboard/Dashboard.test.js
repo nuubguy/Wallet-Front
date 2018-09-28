@@ -17,7 +17,7 @@ describe('Dashboard', () => {
         it('should has customer name', () => {
             const customer = {account: {amount: 0}};
             const dashboard = renderDashboard(customer);
-            expect(dashboard.find('#customer-name').length).toEqual(1);
+            expect(dashboard.find('.customer-name').length).toEqual(1);
         });
 
         it('should has customer balance', () => {

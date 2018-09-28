@@ -15,7 +15,7 @@ describe('Transaction', () => {
 
         it('should has four table head', () => {
             const transactionList = renderTransactionList();
-            expect(transactionList.find('th').length).toEqual(4);
+            expect(transactionList.find('th').length).toEqual(5);
         });
     });
 });

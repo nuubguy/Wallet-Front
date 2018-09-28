@@ -7,15 +7,12 @@ export default class AccountService{
         this.baseUrl = baseUrl;
     }
 
-    getCustomerInfo() {
-        let accountId = this.accountId;
-        let customerId = this.customerId;
-        let baseUrl = this.baseUrl;
-        let balanceUrl = `${baseUrl}/customers/${customerId}/accounts/${accountId}`;
-        return axios.get(balanceUrl).then((response) =>{
-            this.balance = response.data.amount;
-            return response;
-        });
+    getAccount() {
+        const accountId = this.accountId;
+        const customerId = this.customerId;
+        const baseUrl = this.baseUrl;
+        const balanceUrl = `${baseUrl}/customers/${customerId}/accounts/${accountId}`;
+        return axios.get(balanceUrl);
     }
 
     getTransactionList() {
@@ -41,6 +38,8 @@ export default class AccountService{
                         transactionType: getTransactionType(item),
                         dateTime: item.dateTime,
                         amount: item.transactionAmount.amount,
+                        currency: item.transactionAmount.currency,
+                        description: item.description
                     }
                 })
             }

@@ -23,7 +23,7 @@ export default class Menu extends Component {
                             <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="money-bill-wave"/> Withdraw</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-in-alt"/> Deposit</Link>
+                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-in-alt"/> Top Up</Link>
                         </li>
                         <li>
                             <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-out-alt"/> Transafer</Link>
