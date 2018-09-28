@@ -1,5 +1,10 @@
 #dashboard {
     margin: 3em;
+    color: #444444;
+}
+
+#transaction-list {
+    margin-top: 80px;
 }
 
 /*.customer-name {*/

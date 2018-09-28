@@ -8,9 +8,9 @@ describe('Menu', () => {
     }
 
     describe('render', () => {
-        it('should has two menu', () => {
+        it('should has four menu', () => {
             const menu = renderMenu();
-            expect(menu.find('li').length).toEqual(2);
+            expect(menu.find('li').length).toEqual(4);
         });
 
         it('should has two routes', () => {
@@ -32,9 +32,5 @@ describe('Menu', () => {
             expect(routes.at(1).props().path).toEqual('/transaction');
         });
 
-        it('should has logo', () => {
-            const menu = renderMenu();
-            expect(menu.find('.logo').length).toEqual(1);
-        });
     });
 });
