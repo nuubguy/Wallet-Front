@@ -16,7 +16,7 @@ export default class Transaction extends Component {
                 <h3 className="balance"><FontAwesomeIcon
                     icon={"piggy-bank"}/> Balance: {Formatter.currencyFormatter(customer.balance.amount) + " " + customer.balance.currency}
                 </h3>
-                <div className={"transaction-container"}>
+                <div className={"form-container"}>
                     <form id={"form"} onSubmit={onFormSubmit}>
                         <input
                             id={"amount"}

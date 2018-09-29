@@ -1,6 +1,6 @@
-.withdraw-container {
+.transaction-container {
     padding-left: 3em;
-    color: #444444;
+    color: #333333;
     display: flex;
     flex-direction: column;
     justify-content: space-around;

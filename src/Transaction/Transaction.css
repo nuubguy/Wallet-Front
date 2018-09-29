@@ -1,7 +1,8 @@
-.transaction-container {
+.form-container {
     width: 40%;
     background-color: #FFFFFF;
     padding: 2em;
+
 }
 
 form {
@@ -15,7 +16,7 @@ form {
     font-size: 13px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    color: #555555;
+    color: #444444;
     padding: 12px 10px;
     -webkit-transition: 0.5s;
 }
@@ -41,5 +42,5 @@ form {
     cursor: pointer;
     background-color: #FFFFFF;
     border: 1px solid #0fb9b1;
-    color: #555555;
+    color: #444444;
 }

@@ -59,6 +59,7 @@ export default class AccountService{
     }
 
     postTransaction(transaction, customer){
+        console.log(transaction);
         let accountId = this.accountId;
         let customerId = this.customerId;
         let balance = customer.balance.amount;
