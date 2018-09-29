@@ -5,7 +5,7 @@ import AccountService from "../Api/AccountService";
 import Endpoint from "../Api/Endpoint";
 
 /*
-    This class represent logic to serve Dashboard class
+    This class represent logic to serve Dashboard page
  */
 
 export default class DashboardContainer extends Component {

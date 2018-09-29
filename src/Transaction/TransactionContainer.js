@@ -9,7 +9,7 @@ import './TransactionContainer.css'
 import Modal from "react-responsive-modal";
 
 /*
-    This class represent logic to serve Transaction, TransactionList, and TransactionStatus class
+    This class represent logic to serve withdraw and top up page
  */
 
 export default class TransactionContainer extends Component {
@@ -34,7 +34,10 @@ export default class TransactionContainer extends Component {
                     currency: ''
                 }
             },
-            open: false
+            transactionResponse: {
+                openModal: false,
+                status: ''
+            }
         }
     }
 
@@ -75,8 +78,8 @@ export default class TransactionContainer extends Component {
                     </div>
                 )}/>
 
-                <Modal open={this.state.open} onClose={this.onCloseModal} center>
-                    <h2 className={"modal-head"}>Transaction success</h2>
+                <Modal open={this.state.transactionResponse.openModal} onClose={this.onCloseModal} center>
+                    <h2 className={"modal-head"}>{this.state.transactionResponse.status}</h2>
                     <p>
                         Please kindly check your wallet balance.
                     </p>
@@ -107,12 +110,24 @@ export default class TransactionContainer extends Component {
     };
 
     async submit(service) {
-        const response = await service.postTransaction(this.state.transaction, this.state.customer);
-        if (response.status === 201) {
-            this.onOpenModal();
-            this.setState({transaction: {transactionType: '', amount: '', description: ''}});
-            this.refresh();
+        await service.postTransaction(this.state.transaction, this.state.customer);
+
+        try {
+            let transactionResponse = Object.assign({}, this.state.transactionResponse);
+            transactionResponse.status = 'Transaction success';
+
+            this.setState({transactionResponse});
+        } catch (e) {
+            let transactionResponse = Object.assign({}, this.state.transactionResponse);
+            transactionResponse.status = 'Transaction fail';
+
+            this.setState({transactionResponse});
+            console.log("ERRPR");
         }
+
+        this.onOpenModal();
+        this.setState({transaction: {transactionType: '', amount: '', description: ''}});
+        this.refresh();
     }
 
     componentDidMount() {
@@ -151,10 +166,16 @@ export default class TransactionContainer extends Component {
     };
 
     onOpenModal = () => {
-        this.setState({open: true});
+        let transactionResponse = Object.assign({}, this.state.transactionResponse);
+        transactionResponse.openModal = true;
+
+        this.setState({transactionResponse});
     };
 
     onCloseModal = () => {
-        this.setState({open: false});
+        let transactionResponse = Object.assign({}, this.state.transactionResponse);
+        transactionResponse.openModal = false;
+
+        this.setState({transactionResponse});
     };
 }
