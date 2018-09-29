@@ -64,7 +64,7 @@ export default class TransactionContainer extends Component {
                 <Route path="/transaction/top-up" render={() => (
                     <div className={"container"}>
                         <h2 className={"transaction-title"}>
-                            <FontAwesomeIcon icon={"arrow-alt-circle-down"}/>
+                            <FontAwesomeIcon icon={"arrow-alt-circle-up"}/>
                             &nbsp;
                             <span>Top up balance</span>
                         </h2>
