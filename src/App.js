@@ -6,11 +6,10 @@ import {faHome} from '@fortawesome/free-solid-svg-icons'
 import {faMoneyBillWave} from '@fortawesome/free-solid-svg-icons'
 import {faSignInAlt} from '@fortawesome/free-solid-svg-icons'
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
-
-library.add(faHome);
-library.add(faMoneyBillWave);
-library.add(faSignInAlt);
-library.add(faSignOutAlt);
+import {faUser} from '@fortawesome/free-solid-svg-icons'
+import {faCreditCard} from '@fortawesome/free-solid-svg-icons'
+import {faPiggyBank} from '@fortawesome/free-solid-svg-icons'
+import {faArrowCircleDown} from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
     render() {
@@ -21,5 +20,19 @@ class App extends Component {
         );
     }
 }
+
+function initializeFontAwesome() {
+    library.add(faHome);
+    library.add(faMoneyBillWave);
+    library.add(faSignInAlt);
+    library.add(faSignOutAlt);
+    library.add(faUser);
+    library.add(faCreditCard);
+    library.add(faPiggyBank);
+    library.add(faArrowCircleDown);
+}
+
+initializeFontAwesome();
+
 
 export default App;

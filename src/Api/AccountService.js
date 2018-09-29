@@ -1,4 +1,5 @@
 import axios from "axios";
+import Constant from "../Utilities/Constant";
 
 export default class AccountService{
     constructor(customerId, accountId, baseUrl){
@@ -7,14 +8,23 @@ export default class AccountService{
         this.baseUrl = baseUrl;
     }
 
-    getAccount() {
+    async getAccount() {
         const accountId = this.accountId;
         const customerId = this.customerId;
         const baseUrl = this.baseUrl;
         const balanceUrl = `${baseUrl}/customers/${customerId}/accounts/${accountId}`;
-        return axios.get(balanceUrl).then((response) =>{
-            this.account = response.data;
-        });
+        try {
+            let result = await AccountService.axiosGet(balanceUrl);
+            this.account = result.data;
+
+            return result;
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    static axiosGet(url){
+        return axios.get(url);
     }
 
     getTransactionList() {
@@ -48,10 +58,10 @@ export default class AccountService{
         });
     }
 
-    postTransaction(transaction){
+    postTransaction(transaction, customer){
         let accountId = this.accountId;
         let customerId = this.customerId;
-        let balance = this.account.balance.amount;
+        let balance = customer.balance.amount;
 
         let headers = {
             'Content-Type': 'application/json'
@@ -63,19 +73,19 @@ export default class AccountService{
                     accountId: accountId,
                     customer: {
                         customerId: customerId,
-                        name: this.account.customer.name,
-                        info: this.account.customer.info,
-                        disabled: this.account.customer.disabled
+                        name: customer.name,
+                        info: customer.customer.info,
+                        disabled: customer.customer.disabled
                     }
                 }
             }
-           return null;
+            return null;
         };
 
         let transactionRequest = {
             transactionId: null,
-            credit: getTransactionType(transaction.transactionType, 'credit'),
-            debit: getTransactionType(transaction.transactionType, 'debit'),
+            credit: getTransactionType(transaction.transactionType, Constant.credit()),
+            debit: getTransactionType(transaction.transactionType, Constant.debit()),
             balance: {
                 amount: balance,
                 currency: 'IDR'

@@ -20,13 +20,13 @@ export default class Menu extends Component {
                             <Link to="/dashboard" className={"link"}><FontAwesomeIcon icon="home"/> Home</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="money-bill-wave"/> Withdraw</Link>
+                            <Link to="/transaction/withdraw" className={"link"}><FontAwesomeIcon icon="money-bill-wave"/> Withdraw</Link>
                         </li>
                         <li>
                             <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-in-alt"/> Top Up</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-out-alt"/> Transafer</Link>
+                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-out-alt"/> Transfer</Link>
                         </li>
                     </ul>
 

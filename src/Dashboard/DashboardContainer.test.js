@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import mockAxios from 'axios';
 import DashboardContainer from './DashboardContainer';
 import Endpoint from "../Api/Endpoint";
-import Customer from "../Utilities/Customer";
+import Customer from "../Utilities/Constant";
 import AccountService from "../Api/AccountService";
 
 jest.mock('../Api/AccountService');
