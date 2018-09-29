@@ -1,8 +1,7 @@
 .form-container {
-    width: 40%;
     background-color: #FFFFFF;
     padding: 2em;
-
+    margin: 0 auto;
 }
 
 form {
@@ -21,26 +20,33 @@ form {
     -webkit-transition: 0.5s;
 }
 
+.balance {
+    color: #555555;
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
+}
+
 #description {
     resize: none;
 }
 
-#amount:focus {
-    border: 1px solid #22a6b3;
+#amount:focus, #description:focus {
+    border: 1px solid #0fb9b1;
 }
 
 #submit {
     float: right;
     width: 20%;
     -webkit-transition: 0.2s;
-    background-color: #0fb9b1;
+    background-color: #FFFFFF;
     border: 1px solid #0fb9b1;
-    color: #FFFFFF;
+    color: #444444;
 }
 
 #submit:hover {
     cursor: pointer;
-    background-color: #FFFFFF;
+    background-color: #0fb9b1;
     border: 1px solid #0fb9b1;
-    color: #444444;
+    color: #FFFFFF;
 }

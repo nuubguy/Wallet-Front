@@ -4,12 +4,12 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {library} from '@fortawesome/fontawesome-svg-core'
 import {faHome} from '@fortawesome/free-solid-svg-icons'
 import {faMoneyBillWave} from '@fortawesome/free-solid-svg-icons'
-import {faSignInAlt} from '@fortawesome/free-solid-svg-icons'
+import {faArrowAltCircleUp} from '@fortawesome/free-solid-svg-icons'
 import {faSignOutAlt} from '@fortawesome/free-solid-svg-icons'
 import {faUser} from '@fortawesome/free-solid-svg-icons'
 import {faCreditCard} from '@fortawesome/free-solid-svg-icons'
 import {faPiggyBank} from '@fortawesome/free-solid-svg-icons'
-import {faArrowCircleDown} from '@fortawesome/free-solid-svg-icons'
+import {faArrowAltCircleDown} from '@fortawesome/free-solid-svg-icons'
 
 class App extends Component {
     render() {
@@ -24,12 +24,12 @@ class App extends Component {
 function initializeFontAwesome() {
     library.add(faHome);
     library.add(faMoneyBillWave);
-    library.add(faSignInAlt);
+    library.add(faArrowAltCircleUp);
     library.add(faSignOutAlt);
     library.add(faUser);
     library.add(faCreditCard);
     library.add(faPiggyBank);
-    library.add(faArrowCircleDown);
+    library.add(faArrowAltCircleDown);
 }
 
 initializeFontAwesome();

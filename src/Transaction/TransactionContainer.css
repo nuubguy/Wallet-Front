@@ -1,7 +1,14 @@
-.transaction-container {
-    padding-left: 3em;
-    color: #333333;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
+.container {
+    padding: 3em;
+    margin: 0 auto;
+    width: 50%;
 }
+
+.transaction-title {
+    padding: 1em;
+    background-color: #0fb9b1;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
