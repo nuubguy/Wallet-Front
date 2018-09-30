@@ -13,6 +13,7 @@ ul {
 li {
     float: left;
     margin-right: 3em;
+    font-size: 18px;
 }
 
 .link {
@@ -25,6 +26,6 @@ li {
 }
 
 img {
-    width: 80px;
-    height: 80px;
+    width: 18px;
+    height: 18px;
 }

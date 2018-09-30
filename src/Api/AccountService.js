@@ -16,8 +16,8 @@ export default class AccountService{
         try {
             let result = await AccountService.axiosGet(balanceUrl);
             this.account = result.data;
-
             return result;
+
         } catch (error) {
             throw error;
         }
@@ -37,11 +37,11 @@ export default class AccountService{
                 data: response.data.map((item) =>{
                     function getTransactionType(item) {
                         if(item.credit === accountId || item.credit.accountId === accountId){
-                            return 'credit';
+                            return Constant.credit();
                         }
 
                         if(item.debit === accountId || item.debit.accountId === accountId){
-                            return 'debit';
+                            return Constant.debit();
                         }
                     }
 
@@ -58,10 +58,10 @@ export default class AccountService{
         });
     }
 
-    postTransaction(transaction, customer){
+    postTransaction(transaction){
         let accountId = this.accountId;
         let customerId = this.customerId;
-        let balance = customer.balance.amount;
+        let balance = this.account.balance.amount;
 
         let headers = {
             'Content-Type': 'application/json'
@@ -73,9 +73,9 @@ export default class AccountService{
                     accountId: accountId,
                     customer: {
                         customerId: customerId,
-                        name: customer.name,
-                        info: customer.customer.info,
-                        disabled: customer.customer.disabled
+                        name: this.account.customer.name,
+                        info: this.account.customer.info,
+                        disabled: this.account.customer.disabled
                     }
                 }
             }
@@ -99,7 +99,59 @@ export default class AccountService{
         };
 
         let postTransactionUrl = `${this.baseUrl}/transactions`;
-        return axios.post(postTransactionUrl, transactionRequest, {headers : headers});
+        return axios.post(postTransactionUrl, transactionRequest, {headers : headers}).then((response) =>{
+
+            return{
+                status: response.status,
+                data: response.data
+            }
+        }).catch((error) =>{
+
+            let errorData;
+
+            if(error.response.status === 403){
+                errorData = error.response.data.message;
+            }
+
+            if(error.response.status === 400){
+                errorData = error.response.data.errors[0].defaultMessage;
+            }
+
+            let friendlyError = {
+                status: error.response.status,
+                data: errorData
+            };
+
+            throw friendlyError;
+        });
+
+    }
+
+    postTransfer(transfer){
+        let balance = this.account.balance.amount;
+
+        let headers = {
+            'Content-Type': 'application/json'
+        };
+
+        let transferRequest = {
+            transactionId: null,
+            credit: transfer.accountId,
+            debit: this.account,
+            balance: {
+                amount: balance,
+                currency: 'IDR'
+            },
+            dateTime: null,
+            transactionAmount: {
+                amount: transfer.amount,
+                currency: 'IDR'
+            },
+            description: transfer.description
+        };
+
+        let postTransactionUrl = `${this.baseUrl}/transactions`;
+        return axios.post(postTransactionUrl, transferRequest, {headers : headers});
 
     }
 }
