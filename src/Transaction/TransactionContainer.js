@@ -7,6 +7,7 @@ import imageResource from "../Resource/Resource.js";
 import Transaction from "./Transaction";
 import './TransactionContainer.css'
 import Modal from "react-responsive-modal";
+import Transfer from "./Transfer";
 
 /*
     This class represent logic to serve withdraw and top up page
@@ -79,6 +80,25 @@ export default class TransactionContainer extends Component {
                     </div>
                 )}/>
 
+                <Route path="/transaction/transfer" render={() => (
+                    <div className={"container"}>
+                        <h2 className={"transaction-title"}>
+                            <img src={imageResource.TRANSFER} className={"icon"}/>
+                            &nbsp;
+                            <span>Transfer</span>
+                        </h2>
+                        <Transfer
+                            onAmountChange={this.onAmountChange}
+                            onDescriptionChange={this.onDescriptionChange}
+                            onFormSubmit={this.onTopUpFormSubmit}
+                            customer={this.state.customer}
+                            transaction={this.state.transaction}
+                            onMyWalletSelect={this.onMyWalletSelect}
+                            onPayeeWalletSelect={this.onPayeeWalletSelect}
+                        />
+                    </div>
+                )}/>
+
                 <Modal open={this.state.transactionResponse.openModal} onClose={this.onCloseModal} center>
                     <h2 className={"modal-head"}>{this.state.transactionResponse.status}</h2>
                     <p>
@@ -115,13 +135,13 @@ export default class TransactionContainer extends Component {
             await service.postTransaction(this.state.transaction, this.state.customer);
 
             let transactionResponse = Object.assign({}, this.state.transactionResponse);
-            transactionResponse.status = "Transaction success";
+            transactionResponse.status = "Transfer success";
             transactionResponse.message = "Please kindly check your balance";
 
             this.setState({transactionResponse});
         } catch (error) {
             let transactionResponse = Object.assign({}, this.state.transactionResponse);
-            transactionResponse.status = "Transaction fail";
+            transactionResponse.status = "Transfer fail";
             transactionResponse.message = error.data;
 
             this.setState({transactionResponse});

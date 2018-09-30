@@ -26,7 +26,7 @@ export default class Menu extends Component {
                             <Link to="/transaction/top-up" className={"link"}><img src={imageResource.TOP_UP}/> Top Up</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><img src={imageResource.TRANSFER}/> Transfer</Link>
+                            <Link to="/transaction/transfer" className={"link"}><img src={imageResource.TRANSFER}/> Transfer</Link>
                         </li>
                     </ul>
 

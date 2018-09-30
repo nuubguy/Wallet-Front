@@ -11,7 +11,7 @@ describe('TransactionContainer', () => {
     describe('render', () => {
         it('should has two route', () => {
             const render = renderTransactionContainer();
-            expect(render.find('Route').length).toEqual(2);
+            expect(render.find('Route').length).toEqual(3);
         });
 
         it('should contains withdraw route', () => {
@@ -24,6 +24,12 @@ describe('TransactionContainer', () => {
             const render = renderTransactionContainer();
             const withdraw = render.find('Route').at(1);
             expect(withdraw.props().path).toBe('/transaction/top-up');
+        });
+
+        it('should contains transfer route', () => {
+            const render = renderTransactionContainer();
+            const withdraw = render.find('Route').at(2);
+            expect(withdraw.props().path).toBe('/transaction/transfer');
         });
 
         it('should has a modal', () => {
