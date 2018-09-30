@@ -3,7 +3,7 @@ import AccountService from "../Api/AccountService";
 import Constant from "../Utilities/Constant";
 import Endpoint from "../Api/Endpoint";
 import {Route} from "react-router-dom";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import imageResource from "../Resource/Resource.js";
 import Transaction from "./Transaction";
 import './TransactionContainer.css'
 import Modal from "react-responsive-modal";
@@ -36,7 +36,8 @@ export default class TransactionContainer extends Component {
             },
             transactionResponse: {
                 openModal: false,
-                status: ''
+                status: '',
+                message: ''
             }
         }
     }
@@ -47,7 +48,7 @@ export default class TransactionContainer extends Component {
                 <Route path="/transaction/withdraw" render={() => (
                     <div className={"container"}>
                         <h2 className={"transaction-title"}>
-                            <FontAwesomeIcon icon={"arrow-alt-circle-down"}/>
+                            <img src={imageResource.WITHDRAW} className={"icon"}/>
                             &nbsp;
                             <span>Withdraw money</span>
                         </h2>
@@ -64,7 +65,7 @@ export default class TransactionContainer extends Component {
                 <Route path="/transaction/top-up" render={() => (
                     <div className={"container"}>
                         <h2 className={"transaction-title"}>
-                            <FontAwesomeIcon icon={"arrow-alt-circle-up"}/>
+                            <img src={imageResource.TOP_UP} className={"icon"}/>
                             &nbsp;
                             <span>Top up balance</span>
                         </h2>
@@ -81,7 +82,7 @@ export default class TransactionContainer extends Component {
                 <Modal open={this.state.transactionResponse.openModal} onClose={this.onCloseModal} center>
                     <h2 className={"modal-head"}>{this.state.transactionResponse.status}</h2>
                     <p>
-                        Please kindly check your wallet balance.
+                        {this.state.transactionResponse.message}
                     </p>
                 </Modal>
             </div>
@@ -110,33 +111,25 @@ export default class TransactionContainer extends Component {
     };
 
     async submit(service) {
-        await service.postTransaction(this.state.transaction, this.state.customer);
-
         try {
+            await service.postTransaction(this.state.transaction, this.state.customer);
+
             let transactionResponse = Object.assign({}, this.state.transactionResponse);
-            transactionResponse.status = 'Transaction success';
+            transactionResponse.status = "Transaction success";
+            transactionResponse.message = "Please kindly check your balance";
 
             this.setState({transactionResponse});
-        } catch (e) {
+        } catch (error) {
             let transactionResponse = Object.assign({}, this.state.transactionResponse);
-            transactionResponse.status = 'Transaction fail';
+            transactionResponse.status = "Transaction fail";
+            transactionResponse.message = error.data;
 
             this.setState({transactionResponse});
-            console.log("ERRPR");
         }
 
         this.onOpenModal();
         this.setState({transaction: {transactionType: '', amount: '', description: ''}});
         this.refresh();
-    }
-
-    componentDidMount() {
-        this.refresh()
-    }
-
-    refresh() {
-        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
-        this.getCustomerData(service);
     }
 
     onAmountChange = (amount) => {
@@ -152,6 +145,15 @@ export default class TransactionContainer extends Component {
 
         this.setState({transaction});
     };
+
+    componentDidMount() {
+        this.refresh()
+    }
+
+    refresh() {
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+        this.getCustomerData(service);
+    }
 
     setTransactionType = (type) => {
         let transaction = Object.assign({}, this.state.transaction);

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Transaction.css'
 import Formatter from "../Utilities/Formatter";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import imageResource from "../Resource/Resource.js";
 
 /*
     This class represent view to deposit or withdraw money
@@ -15,7 +15,7 @@ export default class Transaction extends Component {
             <div>
                 <div className={"form-container"}>
                     <h4 className="balance">
-                        <FontAwesomeIcon icon={"piggy-bank"}/> &nbsp;
+                        <img src={imageResource.BALANCE}/> &nbsp;
                         <span>Balance: {Formatter.currencyFormatter(customer.balance.amount) + " " + customer.balance.currency}</span>
                     </h4>
                     <form id={"form"} onSubmit={onFormSubmit}>
@@ -31,7 +31,7 @@ export default class Transaction extends Component {
 
                         <textarea rows="5" cols="50"
                                   id={"description"}
-                                  placeholder={"Description of transaction (optional)"}
+                                  placeholder={"Description (optional)"}
                                   onChange={event => onDescriptionChange(event.target.value)}
                                   value={transaction.description}
                         />
@@ -39,7 +39,7 @@ export default class Transaction extends Component {
                         <input
                             id={"submit"}
                             type={"submit"}
-                            value={"Submit"}
+                            value={"Confirm"}
                         />
                     </form>
                 </div>
