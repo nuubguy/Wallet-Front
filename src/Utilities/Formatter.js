@@ -5,7 +5,7 @@
 export default class Formatter {
 
     static currencyFormatter(balance) {
-        let formatter = new Intl.NumberFormat('en-ID', {
+        let formatter = new Intl.NumberFormat('id-ID', {
             minimumFractionDigits: 2,
         });
 

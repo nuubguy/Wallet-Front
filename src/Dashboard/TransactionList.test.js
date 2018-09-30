@@ -13,7 +13,7 @@ describe('Transaction', () => {
             expect(transactionList.find('#last-five-transactions').length).toEqual(1);
         });
 
-        it('should has four table head', () => {
+        it('should has five table head', () => {
             const transactionList = renderTransactionList();
             expect(transactionList.find('th').length).toEqual(5);
         });

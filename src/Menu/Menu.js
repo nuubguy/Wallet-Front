@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Link, Route} from 'react-router-dom';
 import DashboardContainer from "../Dashboard/DashboardContainer";
 import TransactionContainer from "../Transaction/TransactionContainer";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import './Menu.css';
+import imageResource from "../Resource/Resource.js";
 
 /*
     This class represent view of clickable route"
@@ -17,16 +17,16 @@ export default class Menu extends Component {
                 <header>
                     <ul>
                         <li>
-                            <Link to="/dashboard" className={"link"}><FontAwesomeIcon icon="home"/> Home</Link>
+                            <Link to="/dashboard" className={"link"}><img src={imageResource.HOME}/> Home</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="money-bill-wave"/> Withdraw</Link>
+                            <Link to="/transaction/withdraw" className={"link"}><img src={imageResource.WITHDRAW}/> Withdraw</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-in-alt"/> Top Up</Link>
+                            <Link to="/transaction/top-up" className={"link"}><img src={imageResource.TOP_UP}/> Top Up</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><FontAwesomeIcon icon="sign-out-alt"/> Transafer</Link>
+                            <Link to="/transaction" className={"link"}><img src={imageResource.TRANSFER}/> Transfer</Link>
                         </li>
                     </ul>
 
@@ -34,7 +34,7 @@ export default class Menu extends Component {
 
                 <Route path="/dashboard" render={() => (<DashboardContainer/>)}/>
 
-                <Route path="/transaction" render={() => (<TransactionContainer/>)}/>
+                <Route path="/transaction" render={() => (<TransactionContainer />)}/>
             </div>
         );
     }

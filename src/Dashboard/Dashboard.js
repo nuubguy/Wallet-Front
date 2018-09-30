@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Dashboard.css'
 import Formatter from "../Utilities/Formatter";
 import TransactionList from "./TransactionList";
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import imageResource from "../Resource/Resource"
 
 /*
     This class represent view of homepage of a customer
@@ -14,8 +14,8 @@ export default class Dashboard extends Component {
         return (
             <div id="dashboard">
                 <section id="header">
-                    <h1 className="customer-name animation-typewriter"><FontAwesomeIcon icon="user"/> Hello, {customer.name}</h1>
-                    <h3 id="customer-balance"><FontAwesomeIcon icon="money-bill"/> {Formatter.currencyFormatter(customer.account.amount) + " " + customer.account.currency}</h3>
+                    <h1 className="customer-name animation-typewriter">Hello, {customer.name}</h1>
+                    <h3 id="customer-balance"><img src={imageResource.BALANCE}/> {Formatter.currencyFormatter(customer.account.amount) + " " + customer.account.currency}</h3>
                 </section>
 
                 <section id="transaction-list">

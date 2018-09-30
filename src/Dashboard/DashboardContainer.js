@@ -1,11 +1,11 @@
 import React, {Component} from "react";
 import Dashboard from "./Dashboard";
-import Customer from "../Utilities/Customer";
+import Constant from "../Utilities/Constant";
 import AccountService from "../Api/AccountService";
 import Endpoint from "../Api/Endpoint";
 
 /*
-    This class represent logic to serve Dashboard class
+    This class represent logic to serve Dashboard page
  */
 
 export default class DashboardContainer extends Component {
@@ -33,7 +33,7 @@ export default class DashboardContainer extends Component {
     }
 
     componentDidMount() {
-        const service = new AccountService(Customer.id(), Customer.accountId(), Endpoint.baseUrl());
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
 
         this.getCustomerData(service);
         this.getLastFiveTransaction(service);
@@ -41,9 +41,8 @@ export default class DashboardContainer extends Component {
 
     async getCustomerData(service) {
         const response = await service.getAccount();
-
         let customer = Object.assign({}, this.state.customer);
-        customer.name =response.data.customer.name;
+        customer.name = response.data.customer.name;
         customer.account.amount = response.data.balance.amount;
         customer.account.currency = response.data.balance.currency;
 

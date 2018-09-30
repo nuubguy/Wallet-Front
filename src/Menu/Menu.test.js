@@ -31,6 +31,5 @@ describe('Menu', () => {
 
             expect(routes.at(1).props().path).toEqual('/transaction');
         });
-
     });
 });

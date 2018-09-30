@@ -1,40 +1,52 @@
-form {
-    margin: 3em;
+.form-container {
+    background-color: #FFFFFF;
+    padding: 2em;
+    margin: 0 auto;
 }
 
-#amount, #transaction-type, #submit {
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+#amount, #submit, #description {
     outline: none;
     margin: 1em;
     font-size: 13px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    color: #555555;
+    color: #444444;
     padding: 12px 10px;
-}
-
-#amount {
-    width: 20%;
-    display: inline-block;
     -webkit-transition: 0.5s;
 }
 
-#amount:focus {
-    border: 1px solid #22a6b3;
+.balance {
+    color: #555555;
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
 }
 
-#transaction-type {
-    height: 43px;
-    width: 10%;
+#description {
+    resize: none;
+}
+
+#amount:focus, #description:focus {
+    border: 1px solid #0fb9b1;
 }
 
 #submit {
-    width: 7%;
+    float: right;
+    width: 20%;
     -webkit-transition: 0.2s;
+    background-color: #FFFFFF;
+    border: 1px solid #0fb9b1;
+    color: #444444;
 }
 
 #submit:hover {
     cursor: pointer;
-    background-color: #22a6b3;
-    border: 1px solid #22a6b3;
+    background-color: #0fb9b1;
+    border: 1px solid #0fb9b1;
     color: #FFFFFF;
 }

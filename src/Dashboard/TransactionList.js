@@ -13,7 +13,7 @@ export default class TransactionList extends Component {
             <table id={"last-five-transactions"}>
                 <thead>
                 <tr>
-                    <th>Transaction Id</th>
+                    <th>Transaction ID</th>
                     <th>Transaction Type</th>
                     <th>Amount</th>
                     <th>Description</th>

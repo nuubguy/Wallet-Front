@@ -4,42 +4,49 @@ import {shallow} from "enzyme";
 
 describe('TransactionContainer', () => {
 
-    function setup() {
+    function renderTransactionContainer() {
         return shallow(<TransactionContainer transaction={{}}/>);
     }
 
     describe('render', () => {
-        it('should has transaction status component', () => {
-            const render = setup();
-            expect(render.find('TransactionStatus').length).toEqual(1);
+        it('should has two route', () => {
+            const render = renderTransactionContainer();
+            expect(render.find('Route').length).toEqual(2);
         });
 
-        it('should has transaction component', () => {
-            const render = setup();
-            expect(render.find('Transaction').length).toEqual(1);
+        it('should contains withdraw route', () => {
+            const render = renderTransactionContainer();
+            const withdraw = render.find('Route').at(0);
+            expect(withdraw.props().path).toBe('/transaction/withdraw');
         });
 
-        it('should has transaction list component', () => {
-            const render = setup();
-            expect(render.find('TransactionList').length).toEqual(1);
+        it('should contains top-up route', () => {
+            const render = renderTransactionContainer();
+            const withdraw = render.find('Route').at(1);
+            expect(withdraw.props().path).toBe('/transaction/top-up');
+        });
+
+        it('should has a modal', () => {
+            const render = renderTransactionContainer();
+            expect(render.find('Modal').length).toEqual(1);
         });
     });
 
     describe('input of amount of money changes', () => {
         it('should update state', () => {
-            const render = setup();
+            const render = renderTransactionContainer();
             render.instance().onAmountChange('100');
 
             expect(render.state().transaction.amount).toEqual('100');
         })
-    })
+    });
 
-    describe('type of transaction changes', () => {
+    describe('input of description changes', () => {
         it('should update state', () => {
-            const render = setup();
-            render.instance().onTypeChange('Withdraw');
+            const render = renderTransactionContainer();
+            render.instance().onDescriptionChange('Movie');
 
-            expect(render.state().transaction.type).toEqual('Withdraw');
+            expect(render.state().transaction.description).toEqual('Movie');
         })
-    })
+    });
 });

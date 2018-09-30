@@ -1,11 +1,15 @@
-import Transaction from "./Transaction";
 import React, {Component} from "react";
-import TransactionList from "../Dashboard/TransactionList";
-import Customer from "../Utilities/Customer";
-import TransactionStatus from "./TransactionStatus";
+import AccountService from "../Api/AccountService";
+import Constant from "../Utilities/Constant";
+import Endpoint from "../Api/Endpoint";
+import {Route} from "react-router-dom";
+import imageResource from "../Resource/Resource.js";
+import Transaction from "./Transaction";
+import './TransactionContainer.css'
+import Modal from "react-responsive-modal";
 
 /*
-    This class represent logic to serve Transaction, TransactionList, and TransactionStatus class
+    This class represent logic to serve withdraw and top up page
  */
 
 export default class TransactionContainer extends Component {
@@ -13,101 +17,167 @@ export default class TransactionContainer extends Component {
         super();
         this.state = {
             transaction: {
-                transactionId: null,
-                debit: '',
-                credit: '',
-                dateTime: null,
-                transactionAmount:
-                    {
-                        amount: '',
-                        currency: '',
-                    }
+                transactionType: '',
+                amount: '',
+                description: ''
             },
-            transactions: [],
-            transactionStatus: ''
+            customer: {
+                accountId: '',
+                customer: {
+                    customerId: '',
+                    name: '',
+                    info: '',
+                    disabled: ''
+                },
+                balance: {
+                    amount: '',
+                    currency: ''
+                }
+            },
+            transactionResponse: {
+                openModal: false,
+                status: '',
+                message: ''
+            }
         }
     }
 
     render() {
         return (
-            <div>
-                <TransactionStatus
-                    transactionStatus={this.state.transactionStatus}
-                />
+            <div className={"transaction-container"}>
+                <Route path="/transaction/withdraw" render={() => (
+                    <div className={"container"}>
+                        <h2 className={"transaction-title"}>
+                            <img src={imageResource.WITHDRAW} className={"icon"}/>
+                            &nbsp;
+                            <span>Withdraw money</span>
+                        </h2>
+                        < Transaction
+                            onAmountChange={this.onAmountChange}
+                            onDescriptionChange={this.onDescriptionChange}
+                            onFormSubmit={this.onWithdrawFormSubmit}
+                            customer={this.state.customer}
+                            transaction={this.state.transaction}
+                        />
+                    </div>
+                )}/>
 
-                <Transaction
-                    onAmountChange={this.onAmountChange}
-                    onTypeChange={this.onTypeChange}
-                    onFormSubmit={this.onFormSubmit}
-                />
+                <Route path="/transaction/top-up" render={() => (
+                    <div className={"container"}>
+                        <h2 className={"transaction-title"}>
+                            <img src={imageResource.TOP_UP} className={"icon"}/>
+                            &nbsp;
+                            <span>Top up balance</span>
+                        </h2>
+                        <Transaction
+                            onAmountChange={this.onAmountChange}
+                            onDescriptionChange={this.onDescriptionChange}
+                            onFormSubmit={this.onTopUpFormSubmit}
+                            customer={this.state.customer}
+                            transaction={this.state.transaction}
+                        />
+                    </div>
+                )}/>
 
-                <TransactionList transactions={this.state.transactions}/>
+                <Modal open={this.state.transactionResponse.openModal} onClose={this.onCloseModal} center>
+                    <h2 className={"modal-head"}>{this.state.transactionResponse.status}</h2>
+                    <p>
+                        {this.state.transactionResponse.message}
+                    </p>
+                </Modal>
             </div>
         )
     }
 
+    onWithdrawFormSubmit = async (event) => {
+        event.preventDefault();
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+
+        this.state.transaction.transactionType = Constant.debit();
+        //this.setTransactionType(Constant.debit());
+
+        this.submit(service);
+
+    };
+
+    onTopUpFormSubmit = async (event) => {
+        event.preventDefault();
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+
+        this.state.transaction.transactionType = Constant.credit();
+        //this.setTransactionType(Constant.credit());
+
+        this.submit(service)
+    };
+
+    async submit(service) {
+        try {
+            await service.postTransaction(this.state.transaction, this.state.customer);
+
+            let transactionResponse = Object.assign({}, this.state.transactionResponse);
+            transactionResponse.status = "Transaction success";
+            transactionResponse.message = "Please kindly check your balance";
+
+            this.setState({transactionResponse});
+        } catch (error) {
+            let transactionResponse = Object.assign({}, this.state.transactionResponse);
+            transactionResponse.status = "Transaction fail";
+            transactionResponse.message = error.data;
+
+            this.setState({transactionResponse});
+        }
+
+        this.onOpenModal();
+        this.setState({transaction: {transactionType: '', amount: '', description: ''}});
+        this.refresh();
+    }
+
     onAmountChange = (amount) => {
         let transaction = Object.assign({}, this.state.transaction);
-        transaction.transactionAmount.amount = amount;
+        transaction.amount = amount;
+
         this.setState({transaction});
     };
 
-    onTypeChange = (type) => {
+    onDescriptionChange = (description) => {
         let transaction = Object.assign({}, this.state.transaction);
-        if(type === 'debit') {
-            transaction.debit =  {
-                accountId: Customer.accountId(),
-                customer:
-                    {
-                        customerId: Customer.id(),
-                        name: Customer.name(),
-                        info: Customer.info(),
-                        disabled: false
-                    },
-                balance:
-                    {
-                        amount: '',
-                        currency: Customer.currency()
-                    }
-            }
-        } else {
-            transaction.credit = {
-                accountId: Customer.accountId(),
-                customer:
-                    {
-                        customerId: Customer.id(),
-                        name: Customer.name(),
-                        info: Customer.info(),
-                        disabled: false
-                    },
-                balance:
-                    {
-                        amount: '',
-                        currency: "IDR"
-                    }
-            }
-        }
-        this.setState({transaction});
-    };
+        transaction.description = description;
 
-    onFormSubmit = (event) => {
-        // event.preventDefault();
-        // console.log(this.state.transactions);
-        // TransactionApiService.postTransaction(this.state.transaction)
-        //     .then(() => {
-        //         this.setState({transactionStatus: Message.TransactionSuccess()});
-        //         this.componentDidMount();
-        //     })
-        //     .catch(() => {
-        //         this.setState({transactionStatus: Message.TransactionFail()});
-        //     });
+        this.setState({transaction});
     };
 
     componentDidMount() {
-        // TransactionApiService.getLastFiveTransactions(Customer.accountId())
-        //     .then((response) => {
-        //         this.setState({transactions: response});
-        //         console.log(response);
-        //     });
+        this.refresh()
     }
+
+    refresh() {
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+        this.getCustomerData(service);
+    }
+
+    setTransactionType = (type) => {
+        let transaction = Object.assign({}, this.state.transaction);
+        transaction.description = type;
+
+        this.setState({transaction});
+    };
+
+    async getCustomerData(service) {
+        const response = await service.getAccount();
+        this.setState({customer: response.data});
+    };
+
+    onOpenModal = () => {
+        let transactionResponse = Object.assign({}, this.state.transactionResponse);
+        transactionResponse.openModal = true;
+
+        this.setState({transactionResponse});
+    };
+
+    onCloseModal = () => {
+        let transactionResponse = Object.assign({}, this.state.transactionResponse);
+        transactionResponse.openModal = false;
+
+        this.setState({transactionResponse});
+    };
 }

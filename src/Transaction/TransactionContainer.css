@@ -1,0 +1,18 @@
+.container {
+    padding: 3em;
+    margin: 0 auto;
+    width: 50%;
+}
+
+.transaction-title {
+    padding: 1em;
+    background-color: #0fb9b1;
+    color: #FFFFFF;
+    display: flex;
+    justify-content: center;
+}
+
+.icon {
+    width: 25px;
+    height: 25px;
+}
