@@ -11,6 +11,23 @@ describe('accountService', () => {
         return new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
     };
 
+    function getCustomer() {
+        return {
+            accountId: '',
+            customer: {
+                customerId: '',
+                name: '',
+                info: '',
+                disabled: ''
+            },
+            balance: {
+                amount: '',
+                currency: ''
+            }
+
+        };
+    }
+
     describe('getAccountBalance', async () => {
         it('should get account balance from API', async function () {
             const resp = {
@@ -123,7 +140,7 @@ describe('accountService', () => {
 
             let testAccount = TestAccount();
             await testAccount.getAccount();
-            let result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000});
+            let result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
 
             expect(result.data.transactionId).toBe('T00000006');
             expect(result.status).toBe(201);
@@ -165,7 +182,7 @@ describe('accountService', () => {
             await testAccount.getAccount();
             let result;
             try {
-                result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000});
+                result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
             }
             catch (e) {
                 result = e;
@@ -208,7 +225,7 @@ describe('accountService', () => {
 
             let testAccount = TestAccount();
             await testAccount.getAccount();
-            let result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000});
+            let result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
 
             expect(result.data.transactionId).toBe('T00000006');
             expect(result.status).toBe(201);
@@ -250,7 +267,7 @@ describe('accountService', () => {
             await testAccount.getAccount();
             let result;
             try {
-                result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000});
+                result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
             }
             catch (e) {
                 result = e;
