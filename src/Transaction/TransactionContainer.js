@@ -8,9 +8,6 @@ import Transaction from "./Transaction";
 import './TransactionContainer.css'
 import Modal from "react-responsive-modal";
 
-/*
-    This class represent logic to serve withdraw and top up page
- */
 
 export default class TransactionContainer extends Component {
     constructor() {

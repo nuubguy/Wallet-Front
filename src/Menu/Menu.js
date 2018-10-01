@@ -4,6 +4,7 @@ import DashboardContainer from "../Dashboard/DashboardContainer";
 import TransactionContainer from "../Transaction/TransactionContainer";
 import './Menu.css';
 import imageResource from "../Resource/Resource.js";
+import DetailTransactionContainer from "../DetailTransaction/DetailTransactionContainer";
 
 /*
     This class represent view of clickable route"
@@ -33,7 +34,7 @@ export default class Menu extends Component {
                 </header>
 
                 <Route path="/dashboard" render={() => (<DashboardContainer/>)}/>
-
+                <Route path="/detail" render={() => (<DetailTransactionContainer/>)}/>
                 <Route path="/transaction" render={() => (<TransactionContainer />)}/>
             </div>
         );
