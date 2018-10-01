@@ -51,7 +51,7 @@ export default class AccountService {
                         dateTime: item.dateTime,
                         amount: item.transactionAmount.amount,
                         currency: item.transactionAmount.currency,
-                        description: item.description.length === 0 ? '-' : item.description
+                        description: item.description.length === 0 ? '-' : item.description,
                     }
                 })
             }

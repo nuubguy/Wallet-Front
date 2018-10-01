@@ -6,18 +6,18 @@ import './TransactionResponse.css'
     This class represent view to deposit or withdraw money
  */
 
-export default class Transaction extends Component {
+export default class TransactionResponse extends Component {
     render() {
         const {response} = this.props;
         console.log(response);
         return (
             <div className={response.display.toString() + ' ' + response.status}>
-                <p>{response.status + ", " + response.message}</p>
+                <p>{response.status + ", " + response.message + " " + response.withdrawalCode}</p>
             </div>
         )
     }
 }
 
-Transaction.propTypes = {
+TransactionResponse.propTypes = {
     response: PropTypes.object,
 };
