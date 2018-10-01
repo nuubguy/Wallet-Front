@@ -11,8 +11,12 @@ export default class Constant {
         return 'A00000001';
     }
 
-    static name() {
-        return 'Dj';
+    static payeeId() {
+        return 'C00000002';
+    }
+
+    static payeeAccountId() {
+        return 'A00000002';
     }
 
     static currency() {
