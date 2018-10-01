@@ -5,7 +5,7 @@ import Transfer from "./Transfer";
 describe('Transfer', () => {
     function renderTransaction(onAmountChange, onDescriptionChange, onFormSubmit, customer, transaction, onMyWalletSelect, onPayeeWalletSelect) {
         return shallow(<Transfer onAmountChange={onAmountChange} onDescriptionChange={onDescriptionChange}
-                                 onFormSubmit={onFormSubmit} customer={customer} transaction={transaction}
+                                 onFormSubmit={onFormSubmit} sender={customer} transaction={transaction}
                                  onMyWalletSelect={onMyWalletSelect} onPayeeWalletSelect={onPayeeWalletSelect}/>);
     }
 
@@ -28,7 +28,7 @@ describe('Transfer', () => {
 
     function getTransaction() {
         return {
-            transactionType: '',
+            type: '',
             amount: '',
             description: ''
         }
@@ -55,7 +55,7 @@ describe('Transfer', () => {
             expect(render.find('#description').length).toEqual(1);
         });
 
-        it('should has one submit button', () => {
+        it('should has one submitTransaction button', () => {
             const render = renderTransaction(null, null, null, getCustomer(), getTransaction(), null, null);
             expect(render.find('#submit').length).toEqual(1);
         });

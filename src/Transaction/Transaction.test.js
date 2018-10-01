@@ -27,7 +27,7 @@ describe('Transaction', () => {
 
     function getTransaction() {
         return {
-            transactionType: '',
+            type: '',
             amount: '',
             description: ''
         }
@@ -49,7 +49,7 @@ describe('Transaction', () => {
             expect(render.find('#description').length).toEqual(1);
         });
 
-        it('should has one submit button', () => {
+        it('should has one submitTransaction button', () => {
             const render = renderTransaction(null, null, null, getCustomer(), getTransaction());
             expect(render.find('#submit').length).toEqual(1);
         });

@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import './Transaction.css'
 import Formatter from "../Utilities/Formatter";
 import imageResource from "../Resource/Resource.js";
+import Balance from "../Dashboard/Balance";
+import TransactionResponse from "./TransactionResponse";
 
 /*
     This class represent view to deposit or withdraw money
@@ -10,20 +12,18 @@ import imageResource from "../Resource/Resource.js";
 
 export default class Transaction extends Component {
     render() {
-        const {onAmountChange, onDescriptionChange, onFormSubmit, customer, transaction} = this.props;
+        const {onAmountChange, onDescriptionChange, onFormSubmit, customer, transaction, response} = this.props;
         return (
             <div>
                 <div className={"form-container"}>
-                    <h4 className="balance">
-                        <img src={imageResource.BALANCE}/> &nbsp;
-                        <span>Balance: {Formatter.currencyFormatter(customer.balance.amount) + " " + customer.balance.currency}</span>
-                    </h4>
+                    <TransactionResponse response={response}/>
+                    <Balance sender={customer}/>
                     <form id={"form"} onSubmit={onFormSubmit}>
                         <input
                             id={"amount"}
                             type={"number"}
-                            min={"1"}
-                            placeholder={"Amount of money"}
+                            placeholder={"Amount (Min 15000)"}
+                            min={15000}
                             required={true}
                             onChange={event => onAmountChange(event.target.value)}
                             value={transaction.amount}
@@ -31,7 +31,7 @@ export default class Transaction extends Component {
 
                         <textarea rows="5" cols="50"
                                   id={"description"}
-                                  placeholder={"Description (optional)"}
+                                  placeholder={"Description (Max 15 character)"}
                                   onChange={event => onDescriptionChange(event.target.value)}
                                   value={transaction.description}
                         />
@@ -53,5 +53,6 @@ Transaction.propTypes = {
     onFormSubmit: PropTypes.func,
     onDescriptionChange: PropTypes.func,
     customer: PropTypes.object,
-    transaction: PropTypes.object
+    transaction: PropTypes.object,
+    response: PropTypes.object
 };

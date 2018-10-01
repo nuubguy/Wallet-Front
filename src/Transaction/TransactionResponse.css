@@ -1,0 +1,17 @@
+.false {
+    display: none;
+}
+
+.true {
+    display: flex;
+    justify-content: center;
+    color: #FFFFFF;
+}
+
+.successful {
+    background-color: #33AD41;
+}
+
+.fail {
+    background-color: #EB4D4B;
+}
