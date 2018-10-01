@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
+import '../Transaction/Transaction.css'
 
 export default class DetailTransactionInput extends Component {
 
@@ -23,7 +24,7 @@ export default class DetailTransactionInput extends Component {
                     placeholder="input text in here !!"
                     onChange={(e) =>{this.props.descriptionOnChange(e.target.value)}}
                 />
-                <button type="submit">Filter</button>
+                <button id="submit" type="submit">Filter</button>
                 <Modal open={this.props.open} onClose={this.props.onCloseModal} center>
                     <h2>Transaction Not Found</h2>
                 </Modal>
