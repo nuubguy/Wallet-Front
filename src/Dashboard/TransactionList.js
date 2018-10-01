@@ -25,8 +25,8 @@ export default class TransactionList extends Component {
                     transactions.map(transaction => (
                         <tr key={transaction.dateTime}>
                             <td>{transaction.transactionId}</td>
-                            <td>{transaction.transactionType}</td>
-                            <td>{Formatter.currencyFormatter(transaction.amount) + " " + transaction.currency}</td>
+                            <td>{transaction.type}</td>
+                            <td>{Formatter.currencyFormatter(transaction.amount)}</td>
                             <td>{transaction.description}</td>
                             <td>{Formatter.dateFormatter(transaction.dateTime)}</td>
                         </tr>

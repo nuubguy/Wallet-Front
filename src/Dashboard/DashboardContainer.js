@@ -50,7 +50,7 @@ export default class DashboardContainer extends Component {
     }
 
     async getLastFiveTransaction(service) {
-        const response = await service.getTransactionList();
+        const response = await service.getLastFiveTransactionList();
         this.setState({transactions: response.data});
     }
 }

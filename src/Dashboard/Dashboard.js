@@ -15,10 +15,11 @@ export default class Dashboard extends Component {
             <div id="dashboard">
                 <section id="header">
                     <h1 className="customer-name animation-typewriter">Hello, {customer.name}</h1>
-                    <h3 id="customer-balance"><img src={imageResource.BALANCE}/> {Formatter.currencyFormatter(customer.account.amount) + " " + customer.account.currency}</h3>
+                    <h3 id="customer-balance"><img src={imageResource.BALANCE} alt={"balance-icon"}/> {Formatter.currencyFormatter(customer.account.amount) + " " + customer.account.currency}</h3>
                 </section>
 
                 <section id="transaction-list">
+                    <h3>Recent Transactions</h3>
                     <TransactionList transactions={transactions}/>
                 </section>
             </div>

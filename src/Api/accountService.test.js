@@ -88,7 +88,7 @@ describe('accountService', () => {
         });
     });
 
-    describe('getTransactionList', () =>{
+    describe('getLastFiveTransactionList', () =>{
         it('should fetch last 5 transactions of customer account', async () => {
             let transactionList = [{"transactionId":"T00000007","debit":{"accountId":"A00000001","customer":{"customerId":"C00000002","name":"customer 1","info":"customer 1 info","disabled":false},"balance":{"amount":1500000.0,"currency":"IDR"}},"credit":{"accountId":"A00000002","customer":{"customerId":"C00000004","name":"customer 2","info":"customer 2 info","disabled":false},"balance":{"amount":8500000.0,"currency":"IDR"}},"dateTime":"2018-09-15T16:22:04.601","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000006","debit":"A00000001","credit":"A00000002","dateTime":"2018-09-15T16:22:04.569","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000005","debit":"A00000001","credit":"A00000002","dateTime":"2018-09-15T16:22:04.537","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000004","debit":"A00000002","credit":"A00000001","dateTime":"2018-09-15T16:22:04.509","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000003","debit":"A00000001","credit":"A00000002","dateTime":"2018-09-15T16:22:04.485","transactionAmount":{"amount":500000.0,"currency":"IDR"}}];
             axios.get.mockImplementationOnce(() => Promise.resolve({
@@ -98,13 +98,13 @@ describe('accountService', () => {
 
             let testAccount = TestAccount();
 
-            let result = await testAccount.getTransactionList();
+            let result = await testAccount.getLastFiveTransactionList();
 
             expect(result.status).toBe(200);
             expect(result.data.length).toBe(5);
             expect(result.data[0].transactionId).toBe("T00000007");
-            expect(result.data[3].transactionType).toBe("credit");
-            expect(result.data[4].transactionType).toBe("debit");
+            expect(result.data[3].type).toBe("credit");
+            expect(result.data[4].type).toBe("debit");
 
         })
     });
@@ -140,7 +140,7 @@ describe('accountService', () => {
 
             let testAccount = TestAccount();
             await testAccount.getAccount();
-            let result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
+            let result = await testAccount.postTransaction({type: 'credit', amount: 1000000}, getCustomer());
 
             expect(result.data.transactionId).toBe('T00000006');
             expect(result.status).toBe(201);
@@ -182,7 +182,7 @@ describe('accountService', () => {
             await testAccount.getAccount();
             let result;
             try {
-                result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
+                result = await testAccount.postTransaction({type: 'credit', amount: 1000000}, getCustomer());
             }
             catch (e) {
                 result = e;
@@ -225,7 +225,7 @@ describe('accountService', () => {
 
             let testAccount = TestAccount();
             await testAccount.getAccount();
-            let result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
+            let result = await testAccount.postTransaction({type: 'credit', amount: 1000000}, getCustomer());
 
             expect(result.data.transactionId).toBe('T00000006');
             expect(result.status).toBe(201);
@@ -267,7 +267,7 @@ describe('accountService', () => {
             await testAccount.getAccount();
             let result;
             try {
-                result = await testAccount.postTransaction({transactionType: 'credit', amount: 1000000}, getCustomer());
+                result = await testAccount.postTransaction({type: 'credit', amount: 1000000}, getCustomer());
             }
             catch (e) {
                 result = e;
