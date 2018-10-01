@@ -18,7 +18,7 @@ export default class TransactionContainer extends Component {
             transaction: {
                 type: '',
                 amount: '',
-                description: ''
+                description: '',
             },
             customer: {
                 balance: {
@@ -29,7 +29,8 @@ export default class TransactionContainer extends Component {
             response: {
                 display: false,
                 status: '',
-                message: ''
+                message: '',
+                withdrawalCode: ''
             }
         }
     }
@@ -98,19 +99,22 @@ export default class TransactionContainer extends Component {
 
     async submitTransaction(service) {
         try {
-            await service.postTransaction(this.state.transaction);
+            const apiResponse = await service.postTransaction(this.state.transaction);
 
             let response = Object.assign({}, this.state.response);
             response.status = "Transaction successful";
-            response.message = "please check your balance";
+            response.message = "your withdrawal code is: ";
             response.display = true;
+            response.withdrawalCode = apiResponse.data.withdrawalCode;
 
             this.setState({response: response});
         } catch (error) {
+            console.log(error);
             let response = Object.assign({}, this.state.response);
             response.status = "Transaction fail";
             response.message = error.data.toLowerCase();
             response.display = true;
+            response.withdrawalCode = ''
 
             this.setState({response: response});
         }
