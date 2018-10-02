@@ -30,4 +30,12 @@ export default class Constant {
   static maximumTransaction() {
     return 50000000;
   }
+
+  static successAddPayee() {
+    return 'Add payee successful';
+  }
+
+  static errorAddPayee() {
+    return 'Oops!, error add payee';
+  }
 }
