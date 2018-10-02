@@ -7,6 +7,16 @@
     margin-top: 50px;
 }
 
+.detail {
+    float: right;
+    text-decoration: none;
+    color: #555555;
+}
+
+.detail:hover {
+    font-weight: bold;
+}
+
 /*.customer-name {*/
     /*border-right: 2px solid rgba(0, 0, 0);*/
     /*white-space: nowrap;*/
