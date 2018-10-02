@@ -25,11 +25,6 @@ describe('TransactionContainer', () => {
             const withdraw = render.find('Route').at(1);
             expect(withdraw.props().path).toBe('/transaction/top-up');
         });
-
-        it('should has a modal', () => {
-            const render = renderTransactionContainer();
-            expect(render.find('Modal').length).toEqual(1);
-        });
     });
 
     describe('input of amount of money changes', () => {

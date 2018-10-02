@@ -2,10 +2,11 @@ import React, {Component} from "react";
 import AccountService from "../Api/AccountService";
 import Constant from "../Utilities/Constant";
 import Endpoint from "../Api/Endpoint";
-import {Route} from "react-router-dom";
 import imageResource from "../Resource/Resource.js";
 import Transaction from "./Transaction";
 import './TransactionContainer.css'
+import Notifications, {notify} from 'react-notify-toast';
+import {Route} from "react-router-dom";
 
 
 export default class TransactionContainer extends Component {
@@ -16,6 +17,7 @@ export default class TransactionContainer extends Component {
                 type: '',
                 amount: '',
                 description: '',
+                canSubmit: 'cannot-submit'
             },
             customer: {
                 balance: {
@@ -28,50 +30,64 @@ export default class TransactionContainer extends Component {
                 status: '',
                 message: '',
                 withdrawalCode: ''
-            }
+            },
+            redirect: false
         }
     }
 
     render() {
         return (
-            <div className={"transaction-container"}>
-                <Route path="/transaction/withdraw" render={() => (
-                    <div className={"container"}>
-                        <h2 className={"transaction-title"}>
-                            <img src={imageResource.WITHDRAW} className={"icon"} alt={"withdraw-icon"}/>
-                            &nbsp;
-                            <span>Withdraw money</span>
-                        </h2>
-                        < Transaction
-                            onAmountChange={this.onAmountChange}
-                            onDescriptionChange={this.onDescriptionChange}
-                            onFormSubmit={this.onWithdrawFormSubmit}
-                            customer={this.state.customer}
-                            transaction={this.state.transaction}
-                            response={this.state.response}
-                        />
-                    </div>
-                )}/>
+            <div>
+                <Notifications/>
+                <div className={"transaction-container"}>
+                    <Route path="/transaction/withdraw" render={() => (
+                        <div className={"container"}>
+                            <h2 className={"transaction-title"}>
+                                <img src={imageResource.WITHDRAW} className={"icon"} alt={"withdraw-icon"}/>
+                                &nbsp;
+                                <span>Withdraw money</span>
+                            </h2>
+                            < Transaction
+                                onAmountChange={this.onAmountChange}
+                                onDescriptionChange={this.onDescriptionChange}
+                                onFormSubmit={this.onWithdrawFormSubmit}
+                                customer={this.state.customer}
+                                transaction={this.state.transaction}
+                                response={this.state.response}
+                            />
+                        </div>
+                    )}/>
 
-                <Route path="/transaction/top-up" render={() => (
-                    <div className={"container"}>
-                        <h2 className={"transaction-title"}>
-                            <img src={imageResource.TOP_UP} className={"icon"} alt={"top-up-icon"}/>
-                            &nbsp;
-                            <span>Top up balance</span>
-                        </h2>
-                        <Transaction
-                            onAmountChange={this.onAmountChange}
-                            onDescriptionChange={this.onDescriptionChange}
-                            onFormSubmit={this.onTopUpFormSubmit}
-                            customer={this.state.customer}
-                            transaction={this.state.transaction}
-                            response={this.state.response}
-                        />
-                    </div>
-                )}/>
+                    <Route path="/transaction/top-up" render={() => (
+                        <div className={"container"}>
+                            <h2 className={"transaction-title"}>
+                                <img src={imageResource.TOP_UP} className={"icon"} alt={"top-up-icon"}/>
+                                &nbsp;
+                                <span>Top up balance</span>
+                            </h2>
+                            <Transaction
+                                onAmountChange={this.onAmountChange}
+                                onDescriptionChange={this.onDescriptionChange}
+                                onFormSubmit={this.onTopUpFormSubmit}
+                                customer={this.state.customer}
+                                transaction={this.state.transaction}
+                                response={this.state.response}
+                            />
+                        </div>
+                    )}/>
+                </div>
             </div>
         )
+    }
+
+    componentWillReceiveProps() {
+        let transaction = Object.assign({}, this.state.transaction);
+        transaction.type = '';
+        transaction.amount = '';
+        transaction.description = '';
+        transaction.canSubmit = 'cannot-submit';
+
+        this.setState({transaction});
     }
 
     onWithdrawFormSubmit = async (event) => {
@@ -100,29 +116,40 @@ export default class TransactionContainer extends Component {
 
             let response = Object.assign({}, this.state.response);
             response.status = "Transaction successful";
-            response.message = "your withdrawal code is: ";
+            response.message = "";
             response.display = true;
             response.withdrawalCode = apiResponse.data.withdrawalCode;
 
+            this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
             this.setState({response: response});
+            this.setState({redirect: true});
+
+            let color = { background: '#2ecc71', text: "#FFFFFF" };
+            notify.show(response.status, 'custom', 5000, color);
         } catch (error) {
-            console.log(error);
             let response = Object.assign({}, this.state.response);
             response.status = "Transaction fail";
             response.message = error.data.toLowerCase();
             response.display = true;
-            response.withdrawalCode = ''
+            response.withdrawalCode = '';
 
             this.setState({response: response});
+
+            let color = { background: '#EB4D4B', text: "#FFFFFF" };
+            notify.show(response.status + ", " + response.message, 'custom', 5000, color);
         }
 
-        this.setState({transaction: {type: '', amount: '', description: ''}});
         this.refresh();
     }
 
     onAmountChange = (amount) => {
         let transaction = Object.assign({}, this.state.transaction);
         transaction.amount = amount;
+
+        transaction.canSubmit = 'cannot-submit';
+        if (amount >= 15000) {
+            transaction.canSubmit = 'can-submit';
+        }
 
         this.setState({transaction});
     };
@@ -135,7 +162,7 @@ export default class TransactionContainer extends Component {
     };
 
     componentDidMount() {
-        this.refresh()
+        this.refresh();
     }
 
     refresh() {

@@ -4,7 +4,6 @@ import Constant from "../Utilities/Constant";
 import Endpoint from "../Api/Endpoint";
 import imageResource from "../Resource/Resource.js";
 import './TransactionContainer.css'
-import Modal from "react-responsive-modal";
 import Transfer from "./Transfer";
 
 /*
@@ -19,6 +18,8 @@ export default class TransferContainer extends Component {
                 amount: '',
                 description: '',
                 payeeWallet: '',
+                canSubmit: 'cannot-submit',
+                canFillForm: 'cannot-fill-form'
             },
             sender: {
                 balance: {
@@ -49,8 +50,9 @@ export default class TransferContainer extends Component {
                         onFormSubmit={this.onSubmitTransfer}
                         sender={this.state.sender}
                         transaction={this.state.transaction}
-                        onPayeeWalletSelect={this.onPayeeWalletSelect}
+                        onPayeeWalletChange={this.onPayeeWalletChange}
                         response={this.state.response}
+                        onCheckPayeeWallet={this.onPayeeWalletChange}
                     />
                 </div>
             </div>
@@ -60,6 +62,11 @@ export default class TransferContainer extends Component {
     onAmountChange = (amount) => {
         let transaction = Object.assign({}, this.state.transaction);
         transaction.amount = amount;
+
+        transaction.canSubmit = 'cannot-submit';
+        if(amount >= 15000) {
+            transaction.canSubmit = 'can-submit';
+        }
 
         this.setState({transaction});
     };
@@ -71,11 +78,41 @@ export default class TransferContainer extends Component {
         this.setState({transaction});
     };
 
-    onPayeeWalletSelect = (wallet) => {
+    onPayeeWalletChange = (wallet) => {
         let transaction = Object.assign({}, this.state.transaction);
         transaction.payeeWallet = wallet;
 
+        transaction.canFillForm = 'cannot-fill-form';
+        if(wallet.length === 10) {
+            transaction.canFillForm = 'can-fill-form';
+        }
+
         this.setState({transaction});
+    };
+
+    onCheckPayeeWallet = async (event) => {
+        event.preventDefault();
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+        try {
+            await service.postTransfer(this.state.transaction);
+
+            let response = Object.assign({}, this.state.response);
+            response.status = "Transfer successful";
+            response.message = "please kindly check your balance";
+            response.display = true;
+
+            this.setState({response: response});
+        } catch (error) {
+            let response = Object.assign({}, this.state.response);
+            response.status = "Transfer fail";
+            response.message = error.data.toLowerCase();
+            response.display = true;
+
+            this.setState({response: response});
+        }
+
+        this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
+        this.refresh();
     };
 
     onSubmitTransfer = async (event) => {
@@ -99,7 +136,7 @@ export default class TransferContainer extends Component {
             this.setState({response: response});
         }
 
-        this.setState({transaction: {type: '', amount: '', description: ''}});
+        this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
         this.refresh();
     };
 

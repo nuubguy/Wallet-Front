@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import './Transaction.css'
 import Formatter from "../Utilities/Formatter";
-import imageResource from "../Resource/Resource.js";
 import Balance from "../Dashboard/Balance";
-import TransactionResponse from "./TransactionResponse";
 
 /*
     This class represent view to deposit or withdraw money
@@ -12,17 +10,16 @@ import TransactionResponse from "./TransactionResponse";
 
 export default class Transaction extends Component {
     render() {
-        const {onAmountChange, onDescriptionChange, onFormSubmit, customer, transaction, response} = this.props;
+        const {onAmountChange, onDescriptionChange, onFormSubmit, customer, transaction} = this.props;
         return (
             <div>
                 <div className={"form-container"}>
-                    <TransactionResponse response={response}/>
                     <Balance sender={customer}/>
                     <form id={"form"} onSubmit={onFormSubmit}>
                         <input
                             id={"amount"}
                             type={"number"}
-                            placeholder={"Amount (Min 15000)"}
+                            placeholder={"Amount (Min. " + Formatter.currencyFormatter(15000) + ")"}
                             min={15000}
                             required={true}
                             onChange={event => onAmountChange(event.target.value)}
@@ -31,12 +28,13 @@ export default class Transaction extends Component {
 
                         <textarea rows="5" cols="50"
                                   id={"description"}
-                                  placeholder={"Description (Max 15 character)"}
+                                  placeholder={"Description (Optional, max. 15 character)"}
                                   onChange={event => onDescriptionChange(event.target.value)}
                                   value={transaction.description}
                         />
 
                         <input
+                            className={transaction.canSubmit}
                             id={"submit"}
                             type={"submit"}
                             value={"Confirm"}
@@ -53,6 +51,5 @@ Transaction.propTypes = {
     onFormSubmit: PropTypes.func,
     onDescriptionChange: PropTypes.func,
     customer: PropTypes.object,
-    transaction: PropTypes.object,
-    response: PropTypes.object
+    transaction: PropTypes.object
 };
