@@ -149,8 +149,8 @@ describe('accountService', () => {
       expect(result.status).toBe(200);
       expect(result.data.length).toBe(5);
       expect(result.data[0].transactionId).toBe('T00000007');
-      expect(result.data[3].type).toBe('CREDIT');
-      expect(result.data[4].type).toBe('DEBIT');
+      expect(result.data[3].type).toBe('TOP UP');
+      expect(result.data[4].type).toBe('TRANSFER');
     });
   });
 
