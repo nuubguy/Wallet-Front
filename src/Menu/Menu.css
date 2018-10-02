@@ -26,6 +26,15 @@ li {
 }
 
 img {
-    width: 18px;
-    height: 18px;
+    width: 30px;
+    height: 30px;
+}
+
+.menu {
+    display: flex;
+    align-items: center;
+}
+
+.menu-item {
+    margin-right: 5px;
 }
