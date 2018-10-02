@@ -5,6 +5,7 @@ import Endpoint from "../Api/Endpoint";
 import imageResource from "../Resource/Resource.js";
 import './TransactionContainer.css'
 import Transfer from "./Transfer";
+import Notification, {notify} from "react-notify-toast";
 
 /*
     This class represent logic to serve withdraw and top up page
@@ -18,6 +19,7 @@ export default class TransferContainer extends Component {
                 amount: '',
                 description: '',
                 payeeWallet: '',
+                payeeName: '',
                 canSubmit: 'cannot-submit',
                 canFillForm: 'cannot-fill-form'
             },
@@ -38,6 +40,7 @@ export default class TransferContainer extends Component {
     render() {
         return (
             <div className={"transaction-container"}>
+                <Notification/>
                 <div className={"container"}>
                     <h2 className={"transaction-title"}>
                         <img src={imageResource.TRANSFER} className={"icon"} alt={"transfer-icon"}/>
@@ -53,18 +56,39 @@ export default class TransferContainer extends Component {
                         onPayeeWalletChange={this.onPayeeWalletChange}
                         response={this.state.response}
                         onCheckPayeeWallet={this.onPayeeWalletChange}
+                        onCheckPayeeClick={this.checkPayee}
                     />
                 </div>
             </div>
         )
     }
 
+    checkPayee = () => {
+        let targetPayee = this.state.transaction.payeeWallet;
+        let payees = this.state.sender.payees;
+        let transaction = Object.assign({}, this.state.transaction);
+
+        for (let i = 0; i < payees.length; i++) {
+            let accountId = payees[i].accountId;
+
+            if (targetPayee === accountId) {
+                console.log(payees[i].representation.customerName);
+                transaction.canFillForm = 'can-fill-form';
+                transaction.payeeName = payees[i].representation.customerName;
+                this.setState({transaction});
+                return;
+            }
+            let color = {background: '#EB4D4B', text: "#FFFFFF"};
+            notify.show("Account not found", 'custom', 3000, color);
+        }
+    };
+
     onAmountChange = (amount) => {
         let transaction = Object.assign({}, this.state.transaction);
         transaction.amount = amount;
 
         transaction.canSubmit = 'cannot-submit';
-        if(amount >= 15000) {
+        if (amount >= Constant.minimumTransaction()) {
             transaction.canSubmit = 'can-submit';
         }
 
@@ -81,11 +105,11 @@ export default class TransferContainer extends Component {
     onPayeeWalletChange = (wallet) => {
         let transaction = Object.assign({}, this.state.transaction);
         transaction.payeeWallet = wallet;
-
+        transaction.payeeName = '';
         transaction.canFillForm = 'cannot-fill-form';
-        if(wallet.length === 10) {
-            transaction.canFillForm = 'can-fill-form';
-        }
+        transaction.amount = '';
+        transaction.description = '';
+        transaction.canSubmit = 'cannot-submit';
 
         this.setState({transaction});
     };
@@ -111,7 +135,7 @@ export default class TransferContainer extends Component {
             this.setState({response: response});
         }
 
-        this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
+        this.setState({transaction: {amount: '', description: '', payeeWallet: '', canSubmit: 'cannot-submit', canFillForm: 'cannot-fill-form'}});
         this.refresh();
     };
 
@@ -126,17 +150,23 @@ export default class TransferContainer extends Component {
             response.message = "please kindly check your balance";
             response.display = true;
 
+            let color = {background: '#76daff', text: "#FFFFFF"};
+            notify.show(response.status, 'custom', 5000, color);
+
             this.setState({response: response});
+            this.setState({transaction: {amount: '', description: '', payeeWallet: '', payeeName: '', canSubmit: 'cannot-submit'}});
         } catch (error) {
             let response = Object.assign({}, this.state.response);
-            response.status = "Transfer fail";
+            response.status = "Error";
             response.message = error.data.toLowerCase();
             response.display = true;
+
+            let color = {background: '#EB4D4B', text: "#FFFFFF"};
+            notify.show(response.status + ", " + response.message, 'custom', 5000, color);
 
             this.setState({response: response});
         }
 
-        this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
         this.refresh();
     };
 

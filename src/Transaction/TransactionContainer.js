@@ -115,28 +115,32 @@ export default class TransactionContainer extends Component {
             const apiResponse = await service.postTransaction(this.state.transaction);
 
             let response = Object.assign({}, this.state.response);
-            response.status = "Transaction successful";
+            response.status = "Transaction success";
             response.message = "";
             response.display = true;
             response.withdrawalCode = apiResponse.data.withdrawalCode;
 
+            if(this.state.transaction.type === Constant.debit()) {
+                response.status = "Your withdrawal code is " + response.withdrawalCode;
+            }
+
+            let color = { background: '#76daff', text: "#FFFFFF" };
+            notify.show(response.status, 'custom', 5000, color);
+
             this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
             this.setState({response: response});
             this.setState({redirect: true});
-
-            let color = { background: '#2ecc71', text: "#FFFFFF" };
-            notify.show(response.status, 'custom', 5000, color);
         } catch (error) {
             let response = Object.assign({}, this.state.response);
-            response.status = "Transaction fail";
+            response.status = "Error";
             response.message = error.data.toLowerCase();
             response.display = true;
             response.withdrawalCode = '';
 
-            this.setState({response: response});
-
             let color = { background: '#EB4D4B', text: "#FFFFFF" };
             notify.show(response.status + ", " + response.message, 'custom', 5000, color);
+
+            this.setState({response: response});
         }
 
         this.refresh();

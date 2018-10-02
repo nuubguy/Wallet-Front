@@ -1,0 +1,33 @@
+.body {
+    padding: 3em;
+    color: #444444;
+}
+
+.filter-form {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px;
+}
+
+#filter-button {
+    background-color: #F4521E;
+    outline: none;
+    font-size: 13px;
+    border-radius: 4px;
+    color: #FFFFFF;
+    width: 100px;
+    height: 50px;
+}
+
+#filter-image {
+    float: right;
+    width: 40px;
+    height: 40px;
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
