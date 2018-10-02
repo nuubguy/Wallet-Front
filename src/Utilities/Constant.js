@@ -3,31 +3,27 @@
  */
 
 export default class Constant {
-    static id() {
-        return 'C00000001';
-    }
+  static id() {
+    return 'C00000001';
+  }
 
-    static accountId() {
-        return 'A00000001';
-    }
+  static accountId() {
+    return 'A00000001';
+  }
 
-    static payeeId() {
-        return 'C00000002';
-    }
+  static currency() {
+    return 'IDR';
+  }
 
-    static payeeAccountId() {
-        return 'A00000002';
-    }
+  static debit() {
+    return 'debit';
+  }
 
-    static currency() {
-        return 'IDR';
-    }
+  static credit() {
+    return 'credit';
+  }
 
-    static debit() {
-        return 'debit';
-    }
-
-    static credit() {
-        return 'credit';
-    }
+  static minimumTransaction() {
+    return 15000;
+  }
 }
