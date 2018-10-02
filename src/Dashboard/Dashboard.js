@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import {Link, Route} from 'react-router-dom';
 import './Dashboard.css'
 import Formatter from "../Utilities/Formatter";
 import TransactionList from "./TransactionList";
 import imageResource from "../Resource/Resource"
+import DetailTransactionContainer from "../DetailTransaction/DetailTransactionContainer";
 
 /*
     This class represent view of homepage of a customer
@@ -19,9 +21,10 @@ export default class Dashboard extends Component {
                 </section>
 
                 <section id="transaction-list">
-                    <h3>Recent Transactions</h3>
+                    <Link to="/detail" className={"link"}> Detail</Link>
                     <TransactionList transactions={transactions}/>
                 </section>
+                <Route path="/detail" render={() => (<DetailTransactionContainer/>)}/>
             </div>
         )
     }
