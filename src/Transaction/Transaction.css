@@ -9,7 +9,7 @@ form {
     flex-direction: column;
 }
 
-#amount, #submit, #description, #payee-wallet, #check-button {
+#amount, #submit, #description, #payee-wallet, #check-button, #payee-name {
     outline: none;
     margin: 1em;
     font-size: 13px;
@@ -50,6 +50,11 @@ form {
 #payee-wallet-div {
     display: flex;
     flex-direction: row;
+}
+
+#payee-wallet, #payee-name {
+    border: 1px solid #ccc;
+    width: 50%;
 }
 
 #description {
@@ -97,8 +102,16 @@ form {
     background-color: #F5F5F5;
 }
 
+.can-fill-form {
+    background-color: #FFFFFF;
+}
+
 #check-button {
-    background-color: #F4521E;
+    background-color: #33ad41;
+    border: 1px solid #33ad41;
     color: #FFFFFF;
-    border: 1px solid #F4521E;
+}
+
+#check-button:hover {
+    cursor: pointer;
 }
