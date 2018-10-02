@@ -7,7 +7,7 @@ export default class DetailTransactionInput extends Component {
     const { sort } = this.props;
     return (
       <div>
-        <h3>Filter Transaction</h3>
+        <h3>Transaction History</h3>
         <form action="" className="filter-form" onSubmit={this.props.formSubmit}>
           <input
             id="amountInput"
@@ -28,11 +28,12 @@ export default class DetailTransactionInput extends Component {
               this.props.descriptionOnChange(e.target.value);
             }}
           />
+
+          <button id="filter-button" type="submit">Filter</button>
+
             {
                 this.imageSort(sort)
             }
-
-          <button id="filter-button" type="submit">Filter</button>
 
           <label>{this.props.notFoundMessage}</label>
         </form>
@@ -41,7 +42,6 @@ export default class DetailTransactionInput extends Component {
   }
   imageSort = (sort) =>{
       if(sort === 1) {
-          console.log(sort);
           return (
               <img
                   src={Resource.ARROW_UP}
@@ -52,7 +52,6 @@ export default class DetailTransactionInput extends Component {
           )
       }
       else {
-          console.log("A " +sort);
           return (
               <img
                   src={Resource.ARROW_DOWN}

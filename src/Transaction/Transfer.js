@@ -53,7 +53,7 @@ export default class Transfer extends Component {
               rows="5"
               cols="50"
               id="description"
-              placeholder="Description (Optional, max. 15 character)"
+              placeholder="Description (Optional, max. 15 characters)"
               onChange={event => onDescriptionChange(event.target.value)}
               value={transaction.description}
               className={transaction.canFillForm}
@@ -63,7 +63,7 @@ export default class Transfer extends Component {
               className={transaction.canSubmit}
               id="submit"
               type="submit"
-              value="Confirm"
+              value="Transfer"
             />
           </form>
         </div>

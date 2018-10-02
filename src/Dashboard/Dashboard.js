@@ -17,8 +17,7 @@ export default class Dashboard extends Component {
       <div id="dashboard">
         <section id="header">
           <h1 className="customer-name animation-typewriter">
-            Hello,
-            {customer.name}
+            Hello, {customer.name}
           </h1>
           <h3 id="customer-balance">
             <img src={imageResource.BALANCE} alt="balance-icon" />

@@ -6,9 +6,8 @@
 .filter-form {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
     align-items: center;
-    margin: 10px;
+    margin: 15px;
 }
 
 #filter-button {
@@ -19,15 +18,26 @@
     color: #FFFFFF;
     width: 100px;
     height: 50px;
+    margin-right: 10px;
 }
 
-#filter-image {
-    float: right;
-    width: 40px;
-    height: 40px;
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    -ms-transform: rotate(180deg);
-    transform: rotate(180deg);
+#amountInput, #descriptionInput{
+    outline: none;
+    font-size: 13px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    color: #444444;
+    padding: 12px 10px;
+    -webkit-transition: 0.5s;
+    width: 50%;
+    height: 25px;
+}
+
+#amountInput {
+    margin-left: -15px;
+    margin-right: 10px;
+}
+
+#descriptionInput {
+    margin-right: 10px;
 }
