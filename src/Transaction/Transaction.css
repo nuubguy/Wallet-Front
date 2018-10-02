@@ -19,10 +19,32 @@ form {
     -webkit-transition: 0.5s;
 }
 
-#payee-wallet {
+#amountInput,#descriptionInput{
+    outline: none;
+    margin: 1em;
+    font-size: 13px;
     border: 1px solid #ccc;
-    width: 50%;
+    border-radius: 4px;
+    color: #444444;
+    padding: 12px 10px;
+    -webkit-transition: 0.5s;
+    width: 500px;
+    height: 25px;
+}
 
+.balance {
+    color: #555555;
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
+}
+
+#description {
+    resize: none;
+}
+
+#amount:focus, #description:focus,#amountInput:focus,#descriptionInput:focus {
+    border: 1px solid #0fb9b1;
 }
 
 #payee-wallet-div {

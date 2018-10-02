@@ -8,9 +8,6 @@ import './TransactionContainer.css'
 import Notifications, {notify} from 'react-notify-toast';
 import {Route} from "react-router-dom";
 
-/*
-    This class represent logic to serve withdraw and top up page
- */
 
 export default class TransactionContainer extends Component {
     constructor() {
