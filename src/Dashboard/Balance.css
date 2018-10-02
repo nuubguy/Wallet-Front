@@ -1,0 +1,6 @@
+.balance {
+    color: #555555;
+    display: flex;
+    justify-content: flex-end;
+    align-items: right;
+}

@@ -6,7 +6,6 @@ import {Route} from "react-router-dom";
 import imageResource from "../Resource/Resource.js";
 import Transaction from "./Transaction";
 import './TransactionContainer.css'
-import Modal from "react-responsive-modal";
 
 
 export default class TransactionContainer extends Component {
@@ -14,27 +13,21 @@ export default class TransactionContainer extends Component {
         super();
         this.state = {
             transaction: {
-                transactionType: '',
+                type: '',
                 amount: '',
-                description: ''
+                description: '',
             },
             customer: {
-                accountId: '',
-                customer: {
-                    customerId: '',
-                    name: '',
-                    info: '',
-                    disabled: ''
-                },
                 balance: {
                     amount: '',
                     currency: ''
                 }
             },
-            transactionResponse: {
-                openModal: false,
+            response: {
+                display: false,
                 status: '',
-                message: ''
+                message: '',
+                withdrawalCode: ''
             }
         }
     }
@@ -45,7 +38,7 @@ export default class TransactionContainer extends Component {
                 <Route path="/transaction/withdraw" render={() => (
                     <div className={"container"}>
                         <h2 className={"transaction-title"}>
-                            <img src={imageResource.WITHDRAW} className={"icon"}/>
+                            <img src={imageResource.WITHDRAW} className={"icon"} alt={"withdraw-icon"}/>
                             &nbsp;
                             <span>Withdraw money</span>
                         </h2>
@@ -55,6 +48,7 @@ export default class TransactionContainer extends Component {
                             onFormSubmit={this.onWithdrawFormSubmit}
                             customer={this.state.customer}
                             transaction={this.state.transaction}
+                            response={this.state.response}
                         />
                     </div>
                 )}/>
@@ -62,7 +56,7 @@ export default class TransactionContainer extends Component {
                 <Route path="/transaction/top-up" render={() => (
                     <div className={"container"}>
                         <h2 className={"transaction-title"}>
-                            <img src={imageResource.TOP_UP} className={"icon"}/>
+                            <img src={imageResource.TOP_UP} className={"icon"} alt={"top-up-icon"}/>
                             &nbsp;
                             <span>Top up balance</span>
                         </h2>
@@ -72,16 +66,10 @@ export default class TransactionContainer extends Component {
                             onFormSubmit={this.onTopUpFormSubmit}
                             customer={this.state.customer}
                             transaction={this.state.transaction}
+                            response={this.state.response}
                         />
                     </div>
                 )}/>
-
-                <Modal open={this.state.transactionResponse.openModal} onClose={this.onCloseModal} center>
-                    <h2 className={"modal-head"}>{this.state.transactionResponse.status}</h2>
-                    <p>
-                        {this.state.transactionResponse.message}
-                    </p>
-                </Modal>
             </div>
         )
     }
@@ -90,42 +78,45 @@ export default class TransactionContainer extends Component {
         event.preventDefault();
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
 
-        this.state.transaction.transactionType = Constant.debit();
+        this.state.transaction.type = Constant.debit();
         //this.setTransactionType(Constant.debit());
 
-        this.submit(service);
-
+        this.submitTransaction(service);
     };
 
     onTopUpFormSubmit = async (event) => {
         event.preventDefault();
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
 
-        this.state.transaction.transactionType = Constant.credit();
+        this.state.transaction.type = Constant.credit();
         //this.setTransactionType(Constant.credit());
 
-        this.submit(service)
+        this.submitTransaction(service);
     };
 
-    async submit(service) {
+    async submitTransaction(service) {
         try {
-            await service.postTransaction(this.state.transaction, this.state.customer);
+            const apiResponse = await service.postTransaction(this.state.transaction);
 
-            let transactionResponse = Object.assign({}, this.state.transactionResponse);
-            transactionResponse.status = "Transaction success";
-            transactionResponse.message = "Please kindly check your balance";
+            let response = Object.assign({}, this.state.response);
+            response.status = "Transaction successful";
+            response.message = "your withdrawal code is: ";
+            response.display = true;
+            response.withdrawalCode = apiResponse.data.withdrawalCode;
 
-            this.setState({transactionResponse});
+            this.setState({response: response});
         } catch (error) {
-            let transactionResponse = Object.assign({}, this.state.transactionResponse);
-            transactionResponse.status = "Transaction fail";
-            transactionResponse.message = error.data;
+            console.log(error);
+            let response = Object.assign({}, this.state.response);
+            response.status = "Transaction fail";
+            response.message = error.data.toLowerCase();
+            response.display = true;
+            response.withdrawalCode = ''
 
-            this.setState({transactionResponse});
+            this.setState({response: response});
         }
 
-        this.onOpenModal();
-        this.setState({transaction: {transactionType: '', amount: '', description: ''}});
+        this.setState({transaction: {type: '', amount: '', description: ''}});
         this.refresh();
     }
 
@@ -162,19 +153,5 @@ export default class TransactionContainer extends Component {
     async getCustomerData(service) {
         const response = await service.getAccount();
         this.setState({customer: response.data});
-    };
-
-    onOpenModal = () => {
-        let transactionResponse = Object.assign({}, this.state.transactionResponse);
-        transactionResponse.openModal = true;
-
-        this.setState({transactionResponse});
-    };
-
-    onCloseModal = () => {
-        let transactionResponse = Object.assign({}, this.state.transactionResponse);
-        transactionResponse.openModal = false;
-
-        this.setState({transactionResponse});
     };
 }

@@ -15,21 +15,28 @@ describe('Menu', () => {
 
         it('should has two routes', () => {
             const menu = renderMenu();
-           expect(menu.find('Route').length).toEqual(2);
+           expect(menu.find('Route').length).toEqual(3);
         });
 
         it('should has dashboard route', () => {
             const menu = renderMenu();
-            const routes = menu.find('Route');
+            const route = menu.find('Route');
 
-            expect(routes.at(0).props().path).toEqual('/dashboard');
+            expect(route.at(0).props().path).toEqual('/dashboard');
         });
 
         it('should has transaction route', () => {
             const menu = renderMenu();
-            const routes = menu.find('Route');
+            const route = menu.find('Route');
 
-            expect(routes.at(1).props().path).toEqual('/transaction');
+            expect(route.at(1).props().path).toEqual('/transaction');
+        });
+
+        it('should contains transfer route', () => {
+            const menu = renderMenu();
+            const route = menu.find('Route');
+
+            expect(route.at(2).props().path).toBe('/transfer');
         });
     });
 });

@@ -18,16 +18,16 @@ export default class Menu extends Component {
                 <header>
                     <ul>
                         <li>
-                            <Link to="/dashboard" className={"link"}><img src={imageResource.HOME}/> Home</Link>
+                            <Link to="/dashboard" className={"link"}><img src={imageResource.HOME} alt={"home-icon"}/> Home</Link>
                         </li>
                         <li>
-                            <Link to="/transaction/withdraw" className={"link"}><img src={imageResource.WITHDRAW}/> Withdraw</Link>
+                            <Link to="/transaction/withdraw" className={"link"}><img src={imageResource.WITHDRAW} alt={"withdraw-icon"}/> Withdraw</Link>
                         </li>
                         <li>
-                            <Link to="/transaction/top-up" className={"link"}><img src={imageResource.TOP_UP}/> Top Up</Link>
+                            <Link to="/transaction/top-up" className={"link"}><img src={imageResource.TOP_UP} alt={"top-up-icon"}/> Top Up</Link>
                         </li>
                         <li>
-                            <Link to="/transaction" className={"link"}><img src={imageResource.TRANSFER}/> Transfer</Link>
+                            <Link to="/transfer" className={"link"}><img src={imageResource.TRANSFER} alt={"transfer-icon"}/> Transfer</Link>
                         </li>
                     </ul>
 
@@ -36,6 +36,8 @@ export default class Menu extends Component {
                 <Route path="/dashboard" render={() => (<DashboardContainer/>)}/>
                 <Route path="/detail" render={() => (<DetailTransactionContainer/>)}/>
                 <Route path="/transaction" render={() => (<TransactionContainer />)}/>
+
+                <Route path="/transfer" render={() => (<TransferContainer />)}/>
             </div>
         );
     }

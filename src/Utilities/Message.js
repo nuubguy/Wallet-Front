@@ -4,10 +4,10 @@
 
 export default class Message {
     static TransactionSuccess() {
-        return 'Transaction Success';
+        return 'Transfer Success';
     }
 
     static TransactionFail() {
-        return 'Transaction Fail';
+        return 'Transfer Fail';
     }
 }
