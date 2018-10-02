@@ -18,11 +18,6 @@ describe('TransactionContainer', () => {
             const render = renderTransferContainer();
             expect(render.find('Transfer').length).toEqual(1);
         });
-
-        it('should has a modal', () => {
-            const render = renderTransferContainer();
-            expect(render.find('Modal').length).toEqual(1);
-        });
     });
 
     describe('input of amount of money changes', () => {
@@ -43,21 +38,12 @@ describe('TransactionContainer', () => {
         })
     });
 
-    describe('my wallet changes', () => {
-        it('should update state', () => {
-            const render = renderTransferContainer();
-            render.instance().onMyWalletSelect('A00000001');
-
-            expect(render.state().transferTransaction.myWallet).toEqual('A00000001');
-        })
-    });
-
     describe('payee wallet changes', () => {
         it('should update state', () => {
             const render = renderTransferContainer();
-            render.instance().onPayeeWalletSelect('A00000002');
+            render.instance().onPayeeWalletChange('A00000002');
 
-            expect(render.state().transferTransaction.payeeWallet).toEqual('A00000002');
+            expect(render.state().transaction.payeeWallet).toEqual('A00000002');
         })
     });
 });

@@ -6,7 +6,7 @@ describe('Transfer', () => {
     function renderTransaction(onAmountChange, onDescriptionChange, onFormSubmit, customer, transaction, onMyWalletSelect, onPayeeWalletSelect) {
         return shallow(<Transfer onAmountChange={onAmountChange} onDescriptionChange={onDescriptionChange}
                                  onFormSubmit={onFormSubmit} sender={customer} transaction={transaction}
-                                 onMyWalletSelect={onMyWalletSelect} onPayeeWalletSelect={onPayeeWalletSelect}/>);
+                                 onMyWalletSelect={onMyWalletSelect} onPayeeWalletChange={onPayeeWalletSelect}/>);
     }
 
     function getCustomer() {
@@ -40,14 +40,19 @@ describe('Transfer', () => {
             expect(render.find('#form').length).toEqual(1);
         });
 
-        it('should has one select field to choose wallet', () => {
+        it('should has one balance component to display balance', () => {
             const render = renderTransaction(null, null, null, getCustomer(), getTransaction(), null, null);
-            expect(render.find('.my-wallet').length).toEqual(1);
+            expect(render.find('Balance').length).toEqual(1);
         });
 
-        it('should has one input field of amount of money', () => {
+        it('should has one input field of payee account', () => {
             const render = renderTransaction(null, null, null, getCustomer(), getTransaction(), null, null);
-            expect(render.find('.payee-wallet').length).toEqual(1);
+            expect(render.find('#payee-wallet').length).toEqual(1);
+        });
+
+        it('should has one button to check availability of payee account', () => {
+            const render = renderTransaction(null, null, null, getCustomer(), getTransaction(), null, null);
+            expect(render.find('#payee-wallet').length).toEqual(1);
         });
 
         it('should has one text area of description', () => {
@@ -92,23 +97,12 @@ describe('Transfer', () => {
         })
     });
 
-    describe('my wallet select', () => {
-        it('should call onMyWalletSelect callback when a wallet is selected', () => {
-            const onMyWalletChange = jest.fn();
-            const event = {target: {value: ''}};
-
-            renderTransaction(null, null, null, getCustomer(), getTransaction(), onMyWalletChange, null).find('.my-wallet').simulate('change', event);
-            expect(onMyWalletChange).toHaveBeenCalled();
-
-        });
-    });
-
     describe('payee wallet select', () => {
-        it('should call onPayeeWalletSelect callback when a wallet is selected', () => {
+        it('should call onPayeeWalletChange callback when a wallet is selected', () => {
             const onPayeeWalletSelect = jest.fn();
             const event = {target: {value: ''}};
 
-            renderTransaction(null, null, null, getCustomer(), getTransaction(), null, onPayeeWalletSelect).find('.payee-wallet').simulate('change', event);
+            renderTransaction(null, null, null, getCustomer(), getTransaction(), null, onPayeeWalletSelect).find('#payee-wallet').simulate('change', event);
             expect(onPayeeWalletSelect).toHaveBeenCalled();
 
         });

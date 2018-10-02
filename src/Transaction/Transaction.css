@@ -9,44 +9,38 @@ form {
     flex-direction: column;
 }
 
-#amount, #submit, #description {
+#amount, #submit, #description, #payee-wallet, #check-button {
     outline: none;
     margin: 1em;
     font-size: 13px;
-    border: 1px solid #ccc;
     border-radius: 4px;
     color: #444444;
     padding: 12px 10px;
     -webkit-transition: 0.5s;
 }
 
+#payee-wallet {
+    border: 1px solid #ccc;
+    width: 50%;
+
+}
+
+#payee-wallet-div {
+    display: flex;
+    flex-direction: row;
+}
+
 #description {
     resize: none;
+    border: 1px solid #ccc;
+}
+
+#amount {
+    border: 1px solid #ccc;
 }
 
 #amount:focus, #description:focus {
     border: 1px solid #0fb9b1;
-}
-
-#submit {
-    float: right;
-    width: 20%;
-    -webkit-transition: 0.2s;
-    background-color: #33AD41;
-    color: #FFFFFF;
-}
-
-#submit:hover {
-    cursor: pointer;
-}
-
-.payee-wallet {
-    outline: none;
-    margin: 1em;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    color: #555555;
-    height: 43px;
 }
 
 .modal-head, .modal-body {
@@ -56,10 +50,33 @@ form {
     justify-content: center;
 }
 
-#submit:disabled {
+.cannot-submit {
     background-color: #cccccc;
+    pointer-events: none;
 }
 
-#submit:disabled:hover {
-    cursor: auto;
+.can-submit {
+    background-color: #F4521E;
+    border: 1px solid #F4521E;
+}
+
+#submit {
+    -webkit-transition: 0.2s;
+    width: 20%;
+    color: #FFFFFF;
+}
+
+#submit:hover {
+    cursor: pointer;
+}
+
+.cannot-fill-form {
+    pointer-events:none;
+    background-color: #F5F5F5;
+}
+
+#check-button {
+    background-color: #F4521E;
+    color: #FFFFFF;
+    border: 1px solid #F4521E;
 }

@@ -7,7 +7,7 @@ jest.mock('axios');
 
 describe('accountService', () => {
 
-    const TestAccount = () =>{
+    const TestAccount = () => {
         return new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
     };
 
@@ -88,12 +88,60 @@ describe('accountService', () => {
         });
     });
 
-    describe('getLastFiveTransactionList', () =>{
+    describe('getLastFiveTransactionList', () => {
         it('should fetch last 5 transactions of customer account', async () => {
-            let transactionList = [{"transactionId":"T00000007","debit":{"accountId":"A00000001","customer":{"customerId":"C00000002","name":"customer 1","info":"customer 1 info","disabled":false},"balance":{"amount":1500000.0,"currency":"IDR"}},"credit":{"accountId":"A00000002","customer":{"customerId":"C00000004","name":"customer 2","info":"customer 2 info","disabled":false},"balance":{"amount":8500000.0,"currency":"IDR"}},"dateTime":"2018-09-15T16:22:04.601","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000006","debit":"A00000001","credit":"A00000002","dateTime":"2018-09-15T16:22:04.569","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000005","debit":"A00000001","credit":"A00000002","dateTime":"2018-09-15T16:22:04.537","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000004","debit":"A00000002","credit":"A00000001","dateTime":"2018-09-15T16:22:04.509","transactionAmount":{"amount":500000.0,"currency":"IDR"}},{"transactionId":"T00000003","debit":"A00000001","credit":"A00000002","dateTime":"2018-09-15T16:22:04.485","transactionAmount":{"amount":500000.0,"currency":"IDR"}}];
+            let transactionList = [{
+                "transactionId": "T00000007",
+                "debit": {
+                    "accountId": "A00000001",
+                    "customer": {
+                        "customerId": "C00000002",
+                        "name": "customer 1",
+                        "info": "customer 1 info",
+                        "disabled": false
+                    },
+                    "balance": {"amount": 1500000.0, "currency": "IDR"}
+                },
+                "credit": {
+                    "accountId": "A00000002",
+                    "customer": {
+                        "customerId": "C00000004",
+                        "name": "customer 2",
+                        "info": "customer 2 info",
+                        "disabled": false
+                    },
+                    "balance": {"amount": 8500000.0, "currency": "IDR"}
+                },
+                "dateTime": "2018-09-15T16:22:04.601",
+                "transactionAmount": {"amount": 500000.0, "currency": "IDR"}
+            }, {
+                "transactionId": "T00000006",
+                "debit": "A00000001",
+                "credit": "A00000002",
+                "dateTime": "2018-09-15T16:22:04.569",
+                "transactionAmount": {"amount": 500000.0, "currency": "IDR"}
+            }, {
+                "transactionId": "T00000005",
+                "debit": "A00000001",
+                "credit": "A00000002",
+                "dateTime": "2018-09-15T16:22:04.537",
+                "transactionAmount": {"amount": 500000.0, "currency": "IDR"}
+            }, {
+                "transactionId": "T00000004",
+                "debit": "A00000002",
+                "credit": "A00000001",
+                "dateTime": "2018-09-15T16:22:04.509",
+                "transactionAmount": {"amount": 500000.0, "currency": "IDR"}
+            }, {
+                "transactionId": "T00000003",
+                "debit": "A00000001",
+                "credit": "A00000002",
+                "dateTime": "2018-09-15T16:22:04.485",
+                "transactionAmount": {"amount": 500000.0, "currency": "IDR"}
+            }];
             axios.get.mockImplementationOnce(() => Promise.resolve({
                 status: 200,
-                data : transactionList
+                data: transactionList
             }));
 
             let testAccount = TestAccount();
@@ -132,9 +180,19 @@ describe('accountService', () => {
             }));
 
 
-            let transactionResponse = {"transactionId":"T00000006","debit":null,"credit":{"accountId":"A00000001","customer":{"customerId":"C00000001","name":"nofanto","info":"chip","disabled":false},"balance":{"amount":1.1E7,"currency":"IDR"}},"dateTime":"2018-09-15T19:02:17.035","transactionAmount":{"amount":1000000.0,"currency":"IDR"}};
+            let transactionResponse = {
+                "transactionId": "T00000006",
+                "debit": null,
+                "credit": {
+                    "accountId": "A00000001",
+                    "customer": {"customerId": "C00000001", "name": "nofanto", "info": "chip", "disabled": false},
+                    "balance": {"amount": 1.1E7, "currency": "IDR"}
+                },
+                "dateTime": "2018-09-15T19:02:17.035",
+                "transactionAmount": {"amount": 1000000.0, "currency": "IDR"}
+            };
             axios.post.mockImplementationOnce(() => Promise.resolve({
-                status:201,
+                status: 201,
                 data: transactionResponse
             }));
 
@@ -169,7 +227,13 @@ describe('accountService', () => {
             }));
 
 
-            let transactionResponse = {"timestamp":"2018-09-22T20:03:33.670+0000","status":403,"error":"Forbidden","message":"Insufficient balance","path":"/transactions"};
+            let transactionResponse = {
+                "timestamp": "2018-09-22T20:03:33.670+0000",
+                "status": 403,
+                "error": "Forbidden",
+                "message": "Insufficient balance",
+                "path": "/transactions"
+            };
             axios.post.mockImplementationOnce(() => Promise.reject({
                 response: {
                     status: 403,
@@ -217,9 +281,23 @@ describe('accountService', () => {
             }));
 
 
-            let transactionResponse = {"transactionId":"T00000006","debit":{"accountId":"A00000003","customer":{"customerId":"C00000002","name":"nofanto","info":"chip","disabled":false},"balance":{"amount":1.1E7,"currency":"IDR"}},"credit":{"accountId":"A00000001","customer":{"customerId":"C00000001","name":"nofanto","info":"chip","disabled":false},"balance":{"amount":1.1E7,"currency":"IDR"}},"dateTime":"2018-09-15T19:02:17.035","transactionAmount":{"amount":1000000.0,"currency":"IDR"}};
+            let transactionResponse = {
+                "transactionId": "T00000006",
+                "debit": {
+                    "accountId": "A00000003",
+                    "customer": {"customerId": "C00000002", "name": "nofanto", "info": "chip", "disabled": false},
+                    "balance": {"amount": 1.1E7, "currency": "IDR"}
+                },
+                "credit": {
+                    "accountId": "A00000001",
+                    "customer": {"customerId": "C00000001", "name": "nofanto", "info": "chip", "disabled": false},
+                    "balance": {"amount": 1.1E7, "currency": "IDR"}
+                },
+                "dateTime": "2018-09-15T19:02:17.035",
+                "transactionAmount": {"amount": 1000000.0, "currency": "IDR"}
+            };
             axios.post.mockImplementationOnce(() => Promise.resolve({
-                status:201,
+                status: 201,
                 data: transactionResponse
             }));
 
@@ -254,7 +332,13 @@ describe('accountService', () => {
             }));
 
 
-            let transactionResponse = {"timestamp":"2018-09-22T20:03:33.670+0000","status":403,"error":"Forbidden","message":"Insufficient balance","path":"/transactions"};
+            let transactionResponse = {
+                "timestamp": "2018-09-22T20:03:33.670+0000",
+                "status": 403,
+                "error": "Forbidden",
+                "message": "Insufficient balance",
+                "path": "/transactions"
+            };
             axios.post.mockImplementationOnce(() => Promise.reject({
                 response: {
                     status: 403,

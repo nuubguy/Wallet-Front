@@ -33,7 +33,7 @@ export default class Menu extends Component {
 
                 </header>
 
-                <Route path="/dashboard" render={() => (<DashboardContainer/>)}/>
+                <Route path="/dashboard" render={() => (<DashboardContainer/>)} />
 
                 <Route path="/transaction" render={() => (<TransactionContainer />)}/>
 
