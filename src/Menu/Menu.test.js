@@ -8,14 +8,14 @@ describe('Menu', () => {
   }
 
   describe('render', () => {
-    it('should has four menu', () => {
+    it('should has five menu', () => {
       const menu = renderMenu();
-      expect(menu.find('li').length).toEqual(4);
+      expect(menu.find('li').length).toEqual(5);
     });
 
     it('should has four routes', () => {
       const menu = renderMenu();
-      expect(menu.find('Route').length).toEqual(4);
+      expect(menu.find('Route').length).toEqual(5);
     });
 
     it('should has dashboard route', () => {
@@ -43,7 +43,14 @@ describe('Menu', () => {
       const menu = renderMenu();
       const route = menu.find('Route');
 
-      expect(route.at(3).props().path).toBe('/detail');
+      expect(route.at(3).props().path).toBe('/history');
+    });
+
+    it('should contains payee route', () => {
+      const menu = renderMenu();
+      const route = menu.find('Route');
+
+      expect(route.at(4).props().path).toBe('/payee');
     });
   });
 });
