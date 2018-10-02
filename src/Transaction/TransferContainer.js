@@ -79,7 +79,7 @@ export default class TransferContainer extends Component {
                 return;
             }
             let color = {background: '#EB4D4B', text: "#FFFFFF"};
-            notify.show("Account not found", 'custom', 3000, color);
+            notify.show("Payee is not link with your account", 'custom', 3000, color);
         }
     };
 
@@ -88,7 +88,7 @@ export default class TransferContainer extends Component {
         transaction.amount = amount;
 
         transaction.canSubmit = 'cannot-submit';
-        if (amount >= Constant.minimumTransaction()) {
+        if (amount >= Constant.minimumTransaction() && amount <= Constant.maximumTransaction()) {
             transaction.canSubmit = 'can-submit';
         }
 
@@ -157,7 +157,7 @@ export default class TransferContainer extends Component {
             this.setState({transaction: {amount: '', description: '', payeeWallet: '', payeeName: '', canSubmit: 'cannot-submit'}});
         } catch (error) {
             let response = Object.assign({}, this.state.response);
-            response.status = "Error";
+            response.status = "Oops!";
             response.message = error.data.toLowerCase();
             response.display = true;
 

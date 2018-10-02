@@ -115,7 +115,7 @@ export default class TransactionContainer extends Component {
             const apiResponse = await service.postTransaction(this.state.transaction);
 
             let response = Object.assign({}, this.state.response);
-            response.status = "Transaction success";
+            response.status = "Transaction successful";
             response.message = "";
             response.display = true;
             response.withdrawalCode = apiResponse.data.withdrawalCode;
@@ -132,7 +132,7 @@ export default class TransactionContainer extends Component {
             this.setState({redirect: true});
         } catch (error) {
             let response = Object.assign({}, this.state.response);
-            response.status = "Error";
+            response.status = "Oops!";
             response.message = error.data.toLowerCase();
             response.display = true;
             response.withdrawalCode = '';
@@ -151,7 +151,7 @@ export default class TransactionContainer extends Component {
         transaction.amount = amount;
 
         transaction.canSubmit = 'cannot-submit';
-        if (amount >= 15000) {
+        if (amount >= Constant.minimumTransaction() && amount <= Constant.maximumTransaction()) {
             transaction.canSubmit = 'can-submit';
         }
 

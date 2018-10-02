@@ -26,4 +26,8 @@ export default class Constant {
   static minimumTransaction() {
     return 15000;
   }
+
+  static maximumTransaction() {
+    return 50000000;
+  }
 }

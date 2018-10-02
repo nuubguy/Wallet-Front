@@ -21,10 +21,10 @@ export default class Menu extends Component {
               <img src={imageResource.HOME} alt="home-icon" className={"menu-item"} />
               <Link to="/dashboard" className="link"> Home</Link>
             </li>
-            <li className="menu">
-              <img src={imageResource.WITHDRAW} alt="withdraw-icon" className={"menu-item"}/>
-              <Link to="/transaction/withdraw" className="link"> Withdraw</Link>
-            </li>
+            {/*<li className="menu">*/}
+              {/*<img src={imageResource.WITHDRAW} alt="withdraw-icon" className={"menu-item"}/>*/}
+              {/*<Link to="/transaction/withdraw" className="link"> Withdraw</Link>*/}
+            {/*</li>*/}
             <li className="menu">
               <img src={imageResource.TOP_UP} alt="top-up-icon" className={"menu-item"}/>
               <Link to="/transaction/top-up" className="link">Top Up</Link>
