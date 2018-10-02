@@ -1,5 +1,3 @@
-import React from 'react';
-
 const imageResource ={
     BALANCE: require('./balance-icon.png'),
     HOME: require('./home-icon.png'),
