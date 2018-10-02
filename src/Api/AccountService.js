@@ -62,7 +62,11 @@ export default class AccountService {
     getAllTransactionList(sort) {
         const accountId = this.accountId;
         const baseUrl = this.baseUrl;
-        const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&limitResultFromLatest=&description=&amount=&status=${sort}`;
+        let transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&limitResultFromLatest=&description=&amount=&status=${sort}`;
+        if (sort===0){
+            transactionListUrl= `${baseUrl}/transactions/?accountId=${accountId}&limitResultFromLatest=&description=&amount=&status=`;
+        }
+
         return axios.get(transactionListUrl).then(response => ({
             status: response.status,
             data: response.data.map((item) => {

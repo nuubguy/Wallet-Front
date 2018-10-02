@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Modal from 'react-responsive-modal';
+import '../Transaction/Transaction.css'
 
 export default class DetailTransactionInput extends Component {
 
@@ -23,14 +24,14 @@ export default class DetailTransactionInput extends Component {
                     placeholder="input text in here !!"
                     onChange={(e) =>{this.props.descriptionOnChange(e.target.value)}}
                 />
-                <button type="submit">Filter</button>
+                <button id="submit" type="submit">Filter</button>
                 <Modal open={this.props.open} onClose={this.props.onCloseModal} center>
                     <h2>Transaction Not Found</h2>
                 </Modal>
                 <br/><br/>
-                {/*<img src="https://static.thenounproject.com/png/40256-200.png"*/}
-                     {/*onClick={()=>this.props.imageOnClick()} style={{width:50,height:50}} visibility="hidden" alt=""/>*/}
-                {/*<label>{this.props.notFoundMessage}</label>*/}
+                <img src="https://static.thenounproject.com/png/40256-200.png"
+                     onClick={()=>this.props.imageOnClick()} style={{width:50,height:50}} visibility="hidden" alt=""/>
+                <label>{this.props.notFoundMessage}</label>
             </form>
         );
     }
