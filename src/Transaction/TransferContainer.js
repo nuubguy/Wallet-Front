@@ -79,7 +79,7 @@ export default class TransferContainer extends Component {
                 return;
             }
             let color = {background: '#EB4D4B', text: "#FFFFFF"};
-            notify.show("Payee is not link with your account", 'custom', 3000, color);
+            notify.show("Payee is not linked with your account", 'custom', 3000, color);
         }
     };
 
@@ -135,7 +135,15 @@ export default class TransferContainer extends Component {
             this.setState({response: response});
         }
 
-        this.setState({transaction: {amount: '', description: '', payeeWallet: '', canSubmit: 'cannot-submit', canFillForm: 'cannot-fill-form'}});
+        this.setState({
+            transaction: {
+                amount: '',
+                description: '',
+                payeeWallet: '',
+                canSubmit: 'cannot-submit',
+                canFillForm: 'cannot-fill-form'
+            }
+        });
         this.refresh();
     };
 
@@ -154,7 +162,15 @@ export default class TransferContainer extends Component {
             notify.show(response.status, 'custom', 5000, color);
 
             this.setState({response: response});
-            this.setState({transaction: {amount: '', description: '', payeeWallet: '', payeeName: '', canSubmit: 'cannot-submit'}});
+            this.setState({
+                transaction: {
+                    amount: '',
+                    description: '',
+                    payeeWallet: '',
+                    payeeName: '',
+                    canSubmit: 'cannot-submit'
+                }
+            });
         } catch (error) {
             let response = Object.assign({}, this.state.response);
             response.status = "Oops!";
