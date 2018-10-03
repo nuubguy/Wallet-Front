@@ -163,15 +163,15 @@ export default class AccountService {
         },}).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
-        function getTransactionType(item) {
-          if (item.credit === accountId || item.credit.accountId === accountId) {
-            return 'credit';
-          }
+          function getTransactionType(item) {
+              if (item.credit === accountId || item.credit.accountId === accountId) {
+                  return Constant.credit();
+              }
 
-          if (item.debit === accountId || item.debit.accountId === accountId) {
-            return 'debit';
+              if (item.debit === accountId || item.debit.accountId === accountId) {
+                  return Constant.debit();
+              }
           }
-        }
 
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
@@ -213,15 +213,15 @@ export default class AccountService {
         },}).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
-        function getTransactionType(item) {
-          if (item.credit === accountId || item.credit.accountId === accountId) {
-            return 'credit';
-          }
+          function getTransactionType(item) {
+              if (item.credit === accountId || item.credit.accountId === accountId) {
+                  return Constant.credit();
+              }
 
-          if (item.debit === accountId || item.debit.accountId === accountId) {
-            return 'debit';
+              if (item.debit === accountId || item.debit.accountId === accountId) {
+                  return Constant.debit();
+              }
           }
-        }
 
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
@@ -263,15 +263,15 @@ export default class AccountService {
         },}).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
-        function getTransactionType(item) {
-          if (item.credit === accountId || item.credit.accountId === accountId) {
-            return 'credit';
-          }
+          function getTransactionType(item) {
+              if (item.credit === accountId || item.credit.accountId === accountId) {
+                  return Constant.credit();
+              }
 
-          if (item.debit === accountId || item.debit.accountId === accountId) {
-            return 'debit';
+              if (item.debit === accountId || item.debit.accountId === accountId) {
+                  return Constant.debit();
+              }
           }
-        }
 
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
