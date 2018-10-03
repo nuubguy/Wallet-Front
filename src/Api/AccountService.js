@@ -40,7 +40,6 @@ export default class AccountService {
       },
     });
     this.account = result.data;
-
     return result;
   }
 

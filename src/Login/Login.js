@@ -12,13 +12,13 @@ export default class Login extends Component {
             <input
               id="username"
               value={this.props.username}
-              onChange={e => this.props.onChangeUsername(e.target.value)}
+              onChange={e => this.props.onUsernameChange(e.target.value)}
               placeholder="username"
               type="text"
             />
             <input
               id="password"
-              onChange={e => this.props.onChangePassword(e.target.value)}
+              onChange={e => this.props.onPasswordChange(e.target.value)}
               type="password"
               placeholder="password"
             />

@@ -46,6 +46,10 @@
     color: #FFFFFF;
 }
 
+#login-button:hover {
+    cursor: pointer;
+}
+
 #username:focus, #password:focus {
     border: 1px solid #0fb9b1;
 }

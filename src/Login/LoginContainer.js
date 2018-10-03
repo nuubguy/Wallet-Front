@@ -18,9 +18,17 @@ export default class LoginContainer extends Component {
         };
     }
 
+    onUsernameChange = (input) => {
+        this.setState({username: input});
+    };
+
+    onPasswordChange = (input) => {
+        this.setState({password: input});
+    };
+
     render() {
         if (this.state.redirect) {
-            return <Menu onLogout={this.onLogout}/>
+            return <Menu />
         }
         return (
             <section id={"login-section"}>
@@ -29,35 +37,14 @@ export default class LoginContainer extends Component {
                 </div>
                 <Login
                     username={this.state.username} password={this.state.password}
-                    changeUsername={this.onChangeUsername} changePassword={this.onChangePassword}
+                    onUsernameChange={this.onUsernameChange}
+                    onPasswordChange={this.onPasswordChange}
                     onSubmit={this.onSubmit}
                 />
             </section>
         );
     }
 
-    onChangeUsername = (input) => {
-        this.setState(
-            {
-                username: input
-            }
-        )
-    };
-
-    onChangePassword = (input) => {
-        this.setState(
-            {
-                password: input
-            }
-        )
-    };
-
-    onLogout = () => {
-        localStorage.clear();
-        this.setState({
-            redirect: false
-        })
-    };
     onSubmit = (e) => {
         e.preventDefault();
         this.setState({redirect: true});
@@ -68,7 +55,6 @@ export default class LoginContainer extends Component {
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
         try {
             let result = await service.getAccountProfile(username, password);
-            console.log(result);
             localStorage.setItem("customerId", username);
             localStorage.setItem("password", password);
             localStorage.setItem("accountId", result.data.accountList[0].accountId);

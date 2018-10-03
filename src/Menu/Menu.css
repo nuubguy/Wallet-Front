@@ -39,6 +39,15 @@ img {
     margin-right: 5px;
 }
 
-#logout {
+#logout-button {
     background-color: #0fb9b1;
+    color: #FFFFFF;
+    font-size: 18px;
+    border: none;
+    outline: none;
+}
+
+#logout-button:hover {
+    cursor: pointer;
+    font-weight: bold;
 }

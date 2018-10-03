@@ -17,7 +17,7 @@ describe('LoginContainer', () => {
   describe('input of username changes', () => {
     it('should update state', () => {
       const render = renderLoginContainer();
-      render.instance().onChangeUsername('kimi');
+      render.instance().onUsernameChange('kimi');
 
       expect(render.state().username).toEqual('kimi');
     });
@@ -26,7 +26,7 @@ describe('LoginContainer', () => {
   describe('input of password changes', () => {
     it('should update state', () => {
       const render = renderLoginContainer();
-      render.instance().onChangePassword('p@ssw0rd');
+      render.instance().onPasswordChange('p@ssw0rd');
 
       expect(render.state().password).toEqual('p@ssw0rd');
     });
