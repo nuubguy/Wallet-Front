@@ -46,14 +46,14 @@ export default class AccountService {
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `From ${item.debit}${item.debit.customer}`;
+              return `From ${item.debit.accountId}${item.debit.customer.name}`;
             }
             return '';
           }
 
           if (item.debit.accountId === accountId) {
             if (item.credit.accountId !== 'CASH ACCOUNT' || item.credit !== 'CASH ACCOUNT') {
-              return `To ${item.credit}-${item.credit.customer}`;
+              return `To ${item.credit.accountId}-${item.credit.customer.name}`;
             }
             return '';
           }
@@ -97,14 +97,14 @@ export default class AccountService {
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `From ${item.debit}${item.debit.customer}`;
+              return `From ${item.debit.accountId}${item.debit.customer.name}`;
             }
             return '';
           }
 
           if (item.debit.accountId === accountId) {
             if (item.credit.accountId !== 'CASH ACCOUNT' || item.credit !== 'CASH ACCOUNT') {
-              return `To ${item.credit}-${item.credit.customer}`;
+              return `To ${item.credit.accountId}-${item.credit.customer.name}`;
             }
             return '';
           }
