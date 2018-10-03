@@ -317,7 +317,8 @@ export default class AccountService {
     }
   }
 
-  putPayee(payee) {
+  putPayee(payees) {
+    console.log(payees);
     const customerId = this.customerId;
     const accountId = this.accountId;
 
@@ -327,11 +328,10 @@ export default class AccountService {
 
     const transferRequest = {
       accountId,
-      payees: [{
-        accountId: payee.accountId,
-        customerName: payee.customerName,
-      }],
+      payees,
     };
+
+    console.log(transferRequest);
 
     const putPayeeUrl = `${this.baseUrl}/customers/${customerId}/accounts`;
 

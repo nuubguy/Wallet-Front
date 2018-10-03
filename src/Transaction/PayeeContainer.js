@@ -98,10 +98,9 @@ export default class PayeeContainer extends Component {
     }
 
     async addNewPayee(payees) {
-        console.log(payees);
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
         try {
-            await service.putPayee(this.state.customer.payees);
+            await service.putPayee(payees);
             Message.setSuccessMessage(Constant.successAddPayee());
             this.refresh();
         } catch (e) {
