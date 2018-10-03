@@ -3,7 +3,7 @@ import AccountService from './accountService';
 import Constant from '../Utilities/Constant';
 import Endpoint from './Endpoint';
 
-jest.mock('axios');
+// jest.mock('axios');
 
 describe('accountService', () => {
   const TestAccount = () => new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
@@ -84,6 +84,35 @@ describe('accountService', () => {
       expect(result.data.customer.name).toBe('Dj');
     });
   });
+
+    it('should fetch info of customer account from API with basic authentication', async () => {
+
+        const testAccount = TestAccount();
+        const result = await testAccount.getAccountProfile('C00000001','P@ssw0rd');
+
+        expect(result.data.customerId).toBe('C00000001')
+
+
+
+    });
+
+    it('should fetch info of customer account from API with basic authentication when the account wrong', async () => {
+
+        const testAccount = TestAccount();
+        try {
+            const result = await testAccount.getAccountProfile('C00000001','P@ssw0rd2');
+        }catch (e) {
+            expect(e.response.status).toBe(401)
+        }
+
+
+
+
+
+
+
+    });
+});
 
   describe('getTransactionList', () => {
     it('should fetch last 5 transactions of customer account', async () => {
@@ -357,4 +386,3 @@ describe('accountService', () => {
       expect(result.data).toBe('Insufficient balance');
     });
   });
-});

@@ -54,6 +54,7 @@ export default class DetailTransactionContainer extends Component {
         return (
             <div>
                 <Notifications/>
+
                 <section className={"body"}>
                     <DetailTransactionInput
                         amount={this.state.amount}

@@ -26,6 +26,20 @@ export default class AccountService {
     return axios.get(url);
   }
 
+    getAccountProfile(customerId,password){
+      const getCustomerUrl = `/customers/C00000001`;
+          const result = axios.get(getCustomerUrl,{
+              auth: {
+                  username: "C00000001",
+                  password: "P@ssw0rd",
+              }
+          });
+          this.account = result.data;
+
+          return result;
+
+  }
+
   getLastFiveTransactionList() {
     const accountId = this.accountId;
     const baseUrl = this.baseUrl;
