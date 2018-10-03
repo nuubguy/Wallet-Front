@@ -38,3 +38,7 @@ img {
 .menu-item {
     margin-right: 5px;
 }
+
+#logout {
+    background-color: #0fb9b1;
+}

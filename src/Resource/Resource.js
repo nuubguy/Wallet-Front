@@ -9,6 +9,7 @@ const imageResource = {
   ARROW_DOWN: require('./arrow-icon-down.png'),
   ARROW_UP: require('./arrow-icon-up.png'),
   PAYEE: require('./payee-icon.png'),
+  LOGO: require('./logo.png'),
 };
 
 export default imageResource;

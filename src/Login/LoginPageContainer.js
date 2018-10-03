@@ -42,7 +42,7 @@ export default class LoginPageContainer extends Component {
 
     render() {
         if (this.state.redirect) {
-            return <Menu/>
+            return <Menu onLogout={this.onLogout}/>
         }
         return (
             <section>
@@ -55,6 +55,12 @@ export default class LoginPageContainer extends Component {
         );
     }
 
+    onLogout = () => {
+        localStorage.clear();
+        this.setState({
+            redirect: false
+        })
+    }
     onSubmit = (e) => {
         this.setState({redirect: true});
         e.preventDefault();
