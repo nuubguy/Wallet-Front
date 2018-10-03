@@ -6,8 +6,9 @@ const imageResource = {
   TRANSFER: require('./transfer-icon.png'),
   FILTER: require('./filter-icon.png'),
   TRANSACTION_HISTORY: require('./transaction-history-icon.png'),
-  ARROW_DOWN: require('./arrow-icon.png'),
+  ARROW_DOWN: require('./arrow-icon-down.png'),
   ARROW_UP: require('./arrow-icon-up.png'),
+  PAYEE: require('./payee-icon.png'),
 };
 
 export default imageResource;

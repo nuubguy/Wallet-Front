@@ -43,6 +43,7 @@ export default class AccountService {
           }
         }
 
+        console.log(item);
         return {
           transactionId: item.transactionId,
           type: getTransactionType(item).toUpperCase(),
@@ -211,7 +212,6 @@ export default class AccountService {
   }
 
   postTransaction(transaction) {
-    console.log(transaction);
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -262,8 +262,6 @@ export default class AccountService {
   }
 
   postTransfer(transaction, payee) {
-    console.log(this.accountId);
-    console.log(payee);
     const headers = {
       'Content-Type': 'application/json',
     };
@@ -304,6 +302,46 @@ export default class AccountService {
         };
 
         throw friendlyError;
+      });
+  }
+
+  getCustomer(accountId) {
+    const getCustomerUrl = `${this.baseUrl}/accounts?accountId=${accountId}`;
+    try {
+      const result = AccountService.axiosGet(getCustomerUrl);
+      this.account = result.data;
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  putPayee(payee) {
+    const customerId = this.customerId;
+    const accountId = this.accountId;
+
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    const transferRequest = {
+      accountId,
+      payees: [{
+        accountId: payee.accountId,
+        customerName: payee.customerName,
+      }],
+    };
+
+    const putPayeeUrl = `${this.baseUrl}/customers/${customerId}/accounts`;
+
+    return axios.put(putPayeeUrl, transferRequest, { headers })
+      .then(response => ({
+        status: response.status,
+        data: response.data,
+      }))
+      .catch((error) => {
+        console.log(error);
       });
   }
 }

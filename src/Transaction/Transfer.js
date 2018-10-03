@@ -28,6 +28,7 @@ export default class Transfer extends Component {
                 required
               />
               <button id="check-button" onClick={() => onCheckPayeeClick()}>Check</button>
+
             </div>
             <input
               disabled

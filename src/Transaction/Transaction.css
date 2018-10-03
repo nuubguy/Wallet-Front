@@ -9,7 +9,7 @@ form {
     flex-direction: column;
 }
 
-#amount, #submit, #description, #payee-wallet, #check-button, #payee-name {
+#amount, #submit, #description, #payee-wallet, #check-button, #payee-name, .can-submit, .cannot-submit, #payee-account-id {
     outline: none;
     margin: 1em;
     font-size: 13px;
@@ -30,13 +30,17 @@ form {
     resize: none;
 }
 
-#amount:focus, #description:focus, #amountInput:focus, #descriptionInput:focus {
+#amount:focus, #description:focus, #amountInput:focus, #descriptionInput:focus, #payee-account-id:focus {
     border: 1px solid #0fb9b1;
 }
 
 #payee-wallet-div {
     display: flex;
     flex-direction: row;
+}
+
+#payee-account-id {
+    border: 1px solid #ccc;
 }
 
 #payee-wallet, #payee-name {
@@ -74,13 +78,18 @@ form {
     border: 1px solid #F4521E;
 }
 
+.cannot-submit, .can-submit {
+    color: #FFFFFF;
+    width: 20%;
+}
+
 #submit {
     -webkit-transition: 0.2s;
     width: 20%;
     color: #FFFFFF;
 }
 
-#submit:hover {
+#submit:hover, .can-submit:hover {
     cursor: pointer;
 }
 
@@ -93,7 +102,7 @@ form {
     background-color: #FFFFFF;
 }
 
-#check-button {
+#check-button, #add-payee-input {
     background-color: #33ad41;
     border: 1px solid #33ad41;
     color: #FFFFFF;
