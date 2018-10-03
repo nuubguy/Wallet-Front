@@ -27,11 +27,11 @@ export default class Dashboard extends Component {
         </section>
 
         <section id="transaction-list">
-          <Link to="/detail" className="detail"><h5>Show all</h5></Link>
+          <Link to="/history" className="detail"><h5>Show all</h5></Link>
           <h3>Recent Transaction</h3>
           <TransactionList transactions={transactions} />
         </section>
-        <Route path="/detail" render={() => (<DetailTransactionContainer />)} />
+        <Route path="/history" render={() => (<DetailTransactionContainer />)} />
       </div>
     );
   }

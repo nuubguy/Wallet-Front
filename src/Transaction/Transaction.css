@@ -9,7 +9,8 @@ form {
     flex-direction: column;
 }
 
-#amount, #submit, #description, #payee-wallet, #check-button, #payee-name, .can-submit, .cannot-submit, #payee-account-id {
+#amount, #submit, #description, #payee-wallet, #check-button, #payee-name,
+.can-submit, .cannot-submit, #payee-account-id, #payee-name, #find-payee-button {
     outline: none;
     margin: 1em;
     font-size: 13px;
@@ -89,7 +90,7 @@ form {
     color: #FFFFFF;
 }
 
-#submit:hover, .can-submit:hover {
+#submit:hover, .can-submit:hover, #find-payee-button {
     cursor: pointer;
 }
 
@@ -102,7 +103,7 @@ form {
     background-color: #FFFFFF;
 }
 
-#check-button, #add-payee-input {
+#check-button, #add-payee-input, #find-payee-button {
     background-color: #33ad41;
     border: 1px solid #33ad41;
     color: #FFFFFF;
@@ -110,4 +111,18 @@ form {
 
 #check-button:hover {
     cursor: pointer;
+}
+
+#find-payee {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#payee-account-id {
+    width: 40%;
+}
+
+#payee-name {
+    width: 90%;
 }

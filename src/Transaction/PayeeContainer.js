@@ -30,11 +30,12 @@ export default class PayeeContainer extends Component {
                     <h2 className="transaction-title">
                         <img src={imageResource.PAYEE} className="icon" alt="withdraw-icon"/>
                         &nbsp;
-                        <span>Add new payee</span>
+                        <span>Payee</span>
                     </h2>
                     <Payee
                         onAccountIdChange={this.onAccountIdChange}
                         onAddNewPayee={this.getPayee}
+                        onCheckClick={this.onCheckClick}
                         canSubmit={this.state.canSubmit}
                         payee={this.state.payee}
                     />
@@ -46,13 +47,29 @@ export default class PayeeContainer extends Component {
     onAccountIdChange = (accountId) => {
         let payee = Object.assign({}, this.state.payee);
         payee.accountId = accountId;
+        payee.customerName = '';
 
-        this.setState({canSubmit : 'cannot-submit'});
-        if (accountId.length === 9) {
-            this.setState({canSubmit : 'can-submit'});
-        }
-
+        this.setState({canSubmit: 'cannot-submit'});
         this.setState({payee});
+    };
+
+    onCheckClick = async () => {
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+        const accountId = this.state.payee.accountId;
+        try {
+            const response = await service.getCustomer(accountId);
+
+            let payee = Object.assign({}, this.state.payee);
+            payee.accountId = response.data.accountId;
+            payee.customerName = response.data.customerName;
+
+            this.setState({payee});
+            this.setState({canSubmit : 'can-submit'});
+
+            Message.setSuccessMessage('Account found');
+        } catch (e) {
+            Message.setErrorMessage('Oops!, Account not found');
+        }
     };
 
     getPayee = async (event) => {
@@ -69,6 +86,7 @@ export default class PayeeContainer extends Component {
             this.setState({payee});
 
             let payees = this.constructPayees();
+
             this.addNewPayee(payees);
         } catch (e) {
             Message.setErrorMessage(Constant.errorAddPayee());
