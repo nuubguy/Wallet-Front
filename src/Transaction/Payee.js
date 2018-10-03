@@ -9,18 +9,34 @@ import PropTypes from 'prop-types';
 export default class Payee extends Component {
   render() {
     const {
-      onAccountIdChange, onAddNewPayee, canSubmit, payee,
+      onAccountIdChange, onAddNewPayee, canSubmit, payee, onCheckClick,
     } = this.props;
 
     return (
       <div>
-        <div className="form-container" onSubmit={onAddNewPayee}>
-          <form id="form">
+        <div className="form-container">
+          <form id="form" onSubmit={onAddNewPayee}>
+            <div id={"find-payee"}>
+              <input
+                id="payee-account-id"
+                placeholder="Account ID"
+                onChange={event => onAccountIdChange(event.target.value)}
+                value={payee.accountId}
+              />
+              <input
+                id="find-payee-button"
+                type="button"
+                value="Check"
+                onClick={onCheckClick}
+              />
+            </div>
+
             <input
-              id="payee-account-id"
-              placeholder="Payee's account ID"
+              disabled
+              id="payee-name"
+              placeholder="Account Name"
               onChange={event => onAccountIdChange(event.target.value)}
-              value={payee.accountId}
+              value={payee.customerName}
             />
 
             <input
@@ -41,4 +57,5 @@ Payee.propTypes = {
   onAddNewPayee: PropTypes.func,
   canSubmit: PropTypes.string,
   payee: PropTypes.object,
+  onCheckClick: PropTypes.func,
 };
