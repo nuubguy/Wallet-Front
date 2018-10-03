@@ -92,29 +92,29 @@ describe('accountService', () => {
 
   it('should fetch info of customer account from API with basic authentication', async () => {
     const resp = {
-      "customerId": "C00000001",
-      "customerName": "Chip",
-      "accountList": [
+      customerId: 'C00000001',
+      customerName: 'Chip',
+      accountList: [
         {
-          "customer": {
-            "name": "Chip",
-            "info": "Someone at BTPN",
-            "customerId": "C00000001",
-            "disabled": false
+          customer: {
+            name: 'Chip',
+            info: 'Someone at BTPN',
+            customerId: 'C00000001',
+            disabled: false,
           },
-          "accountId": "A00000001",
-          "payees": [],
-          "representation": {
-            "accountId": "A00000001",
-            "customerName": "Chip",
-            "customerId": "C00000001"
+          accountId: 'A00000001',
+          payees: [],
+          representation: {
+            accountId: 'A00000001',
+            customerName: 'Chip',
+            customerId: 'C00000001',
           },
-          "balance": {
-            "amount": 0,
-            "currency": "IDR"
-          }
-        }
-      ]
+          balance: {
+            amount: 0,
+            currency: 'IDR',
+          },
+        },
+      ],
     };
     axios.get.mockImplementationOnce(() => Promise.resolve({
       status: 200,
@@ -129,29 +129,29 @@ describe('accountService', () => {
 
   it('should fetch info of customer account from API with basic authentication when the account wrong', async () => {
     const resp = {
-      "customerId": "C00000001",
-      "customerName": "Chip",
-      "accountList": [
+      customerId: 'C00000001',
+      customerName: 'Chip',
+      accountList: [
         {
-          "customer": {
-            "name": "Chip",
-            "info": "Someone at BTPN",
-            "customerId": "C00000001",
-            "disabled": false
+          customer: {
+            name: 'Chip',
+            info: 'Someone at BTPN',
+            customerId: 'C00000001',
+            disabled: false,
           },
-          "accountId": "A00000001",
-          "payees": [],
-          "representation": {
-            "accountId": "A00000001",
-            "customerName": "Chip",
-            "customerId": "C00000001"
+          accountId: 'A00000001',
+          payees: [],
+          representation: {
+            accountId: 'A00000001',
+            customerName: 'Chip',
+            customerId: 'C00000001',
           },
-          "balance": {
-            "amount": 0,
-            "currency": "IDR"
-          }
-        }
-      ]
+          balance: {
+            amount: 0,
+            currency: 'IDR',
+          },
+        },
+      ],
     };
     axios.get.mockImplementationOnce(() => Promise.resolve({
       status: 200,
@@ -193,106 +193,106 @@ describe('getTransactionList', () => {
       dateTime: '2018-09-15T16:22:04.601',
       transactionAmount: { amount: 500000.0, currency: 'IDR' },
     },
-      {
-        transactionId: 'T00000007',
-        debit: {
-          accountId: 'A00000001',
-          customer: {
-            customerId: 'C00000002',
-            name: 'customer 1',
-            info: 'customer 1 info',
-            disabled: false,
-          },
-          balance: { amount: 1500000.0, currency: 'IDR' },
+    {
+      transactionId: 'T00000007',
+      debit: {
+        accountId: 'A00000001',
+        customer: {
+          customerId: 'C00000002',
+          name: 'customer 1',
+          info: 'customer 1 info',
+          disabled: false,
         },
-        credit: {
-          accountId: 'A00000002',
-          customer: {
-            customerId: 'C00000004',
-            name: 'customer 2',
-            info: 'customer 2 info',
-            disabled: false,
-          },
-          balance: { amount: 8500000.0, currency: 'IDR' },
-        },
-        dateTime: '2018-09-15T16:22:04.601',
-        transactionAmount: { amount: 500000.0, currency: 'IDR' },
+        balance: { amount: 1500000.0, currency: 'IDR' },
       },
-      {
-        transactionId: 'T00000007',
-        debit: {
-          accountId: 'A00000001',
-          customer: {
-            customerId: 'C00000002',
-            name: 'customer 1',
-            info: 'customer 1 info',
-            disabled: false,
-          },
-          balance: { amount: 1500000.0, currency: 'IDR' },
+      credit: {
+        accountId: 'A00000002',
+        customer: {
+          customerId: 'C00000004',
+          name: 'customer 2',
+          info: 'customer 2 info',
+          disabled: false,
         },
-        credit: {
-          accountId: 'A00000002',
-          customer: {
-            customerId: 'C00000004',
-            name: 'customer 2',
-            info: 'customer 2 info',
-            disabled: false,
-          },
-          balance: { amount: 8500000.0, currency: 'IDR' },
-        },
-        dateTime: '2018-09-15T16:22:04.601',
-        transactionAmount: { amount: 500000.0, currency: 'IDR' },
+        balance: { amount: 8500000.0, currency: 'IDR' },
       },
-      {
-        transactionId: 'T00000007',
-        debit: {
-          accountId: 'A00000001',
-          customer: {
-            customerId: 'C00000002',
-            name: 'customer 1',
-            info: 'customer 1 info',
-            disabled: false,
-          },
-          balance: { amount: 1500000.0, currency: 'IDR' },
+      dateTime: '2018-09-15T16:22:04.601',
+      transactionAmount: { amount: 500000.0, currency: 'IDR' },
+    },
+    {
+      transactionId: 'T00000007',
+      debit: {
+        accountId: 'A00000001',
+        customer: {
+          customerId: 'C00000002',
+          name: 'customer 1',
+          info: 'customer 1 info',
+          disabled: false,
         },
-        credit: {
-          accountId: 'A00000002',
-          customer: {
-            customerId: 'C00000004',
-            name: 'customer 2',
-            info: 'customer 2 info',
-            disabled: false,
-          },
-          balance: { amount: 8500000.0, currency: 'IDR' },
-        },
-        dateTime: '2018-09-15T16:22:04.601',
-        transactionAmount: { amount: 500000.0, currency: 'IDR' },
+        balance: { amount: 1500000.0, currency: 'IDR' },
       },
-      {
-        transactionId: 'T00000007',
-        debit: {
-          accountId: 'A00000001',
-          customer: {
-            customerId: 'C00000002',
-            name: 'customer 1',
-            info: 'customer 1 info',
-            disabled: false,
-          },
-          balance: { amount: 1500000.0, currency: 'IDR' },
+      credit: {
+        accountId: 'A00000002',
+        customer: {
+          customerId: 'C00000004',
+          name: 'customer 2',
+          info: 'customer 2 info',
+          disabled: false,
         },
-        credit: {
-          accountId: 'A00000002',
-          customer: {
-            customerId: 'C00000004',
-            name: 'customer 2',
-            info: 'customer 2 info',
-            disabled: false,
-          },
-          balance: { amount: 8500000.0, currency: 'IDR' },
+        balance: { amount: 8500000.0, currency: 'IDR' },
+      },
+      dateTime: '2018-09-15T16:22:04.601',
+      transactionAmount: { amount: 500000.0, currency: 'IDR' },
+    },
+    {
+      transactionId: 'T00000007',
+      debit: {
+        accountId: 'A00000001',
+        customer: {
+          customerId: 'C00000002',
+          name: 'customer 1',
+          info: 'customer 1 info',
+          disabled: false,
         },
-        dateTime: '2018-09-15T16:22:04.601',
-        transactionAmount: { amount: 500000.0, currency: 'IDR' },
-      }];
+        balance: { amount: 1500000.0, currency: 'IDR' },
+      },
+      credit: {
+        accountId: 'A00000002',
+        customer: {
+          customerId: 'C00000004',
+          name: 'customer 2',
+          info: 'customer 2 info',
+          disabled: false,
+        },
+        balance: { amount: 8500000.0, currency: 'IDR' },
+      },
+      dateTime: '2018-09-15T16:22:04.601',
+      transactionAmount: { amount: 500000.0, currency: 'IDR' },
+    },
+    {
+      transactionId: 'T00000007',
+      debit: {
+        accountId: 'A00000001',
+        customer: {
+          customerId: 'C00000002',
+          name: 'customer 1',
+          info: 'customer 1 info',
+          disabled: false,
+        },
+        balance: { amount: 1500000.0, currency: 'IDR' },
+      },
+      credit: {
+        accountId: 'A00000002',
+        customer: {
+          customerId: 'C00000004',
+          name: 'customer 2',
+          info: 'customer 2 info',
+          disabled: false,
+        },
+        balance: { amount: 8500000.0, currency: 'IDR' },
+      },
+      dateTime: '2018-09-15T16:22:04.601',
+      transactionAmount: { amount: 500000.0, currency: 'IDR' },
+    }];
     axios.get.mockImplementationOnce(() => Promise.resolve({
       status: 200,
       data: transactionList,

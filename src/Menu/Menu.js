@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route, Redirect } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import DashboardContainer from '../Dashboard/DashboardContainer';
 import TransactionContainer from '../Transaction/TransactionContainer';
 import './Menu.css';
@@ -36,7 +36,7 @@ export default class Menu extends Component {
             </li>
             <li className="menu">
               <img src={imageResource.PAYEE} alt="transaction-history" className="menu-item" />
-              <Link to="/payee" className="link"> Payee</Link>
+              <Link to="/payee" className="link"> Add Payee</Link>
             </li>
           </ul>
         </header>

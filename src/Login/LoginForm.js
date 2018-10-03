@@ -8,7 +8,7 @@ export default class Loginform extends Component {
       <div id="login-box">
         <div>
           <h2 id="login-title">Welcome back</h2>
-            <img src={imageResource.LOGO} id={"logo"}/>
+            <img src={imageResource.LOGO} id={"logo"} alt={"logo"}/>
           <form id="form" onSubmit={this.props.onSubmit}>
             <input
               id="username"
@@ -24,7 +24,7 @@ export default class Loginform extends Component {
               placeholder="password"
             />
 
-            <input type="submit" id="login-button" />
+            <input type="submit" id="login-button" value={"Login"}/>
           </form>
         </div>
       </div>

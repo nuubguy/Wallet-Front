@@ -30,7 +30,7 @@ export default class PayeeContainer extends Component {
                     <h2 className="transaction-title">
                         <img src={imageResource.PAYEE} className="icon" alt="withdraw-icon"/>
                         &nbsp;
-                        <span>Payee</span>
+                        <span>Add Payee</span>
                     </h2>
                     <Payee
                         onAccountIdChange={this.onAccountIdChange}
@@ -54,22 +54,27 @@ export default class PayeeContainer extends Component {
     };
 
     onCheckClick = async () => {
-        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
-        const accountId = this.state.payee.accountId;
-        try {
-            const response = await service.getCustomer(accountId);
+        console.log(this.state.customer);
+        if (this.state.customer.accountId !== this.state.payee.accountId) {
+            const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+            const accountId = this.state.payee.accountId;
+            try {
+                const response = await service.getCustomer(accountId);
 
-            let payee = Object.assign({}, this.state.payee);
-            payee.accountId = response.data.accountId;
-            payee.customerName = response.data.customerName;
+                let payee = Object.assign({}, this.state.payee);
+                payee.accountId = response.data.accountId;
+                payee.customerName = response.data.customerName;
 
-            this.setState({payee});
-            this.setState({canSubmit : 'can-submit'});
+                this.setState({payee});
+                this.setState({canSubmit: 'can-submit'});
 
-            Message.setSuccessMessage('Account found');
-        } catch (e) {
-            Message.setErrorMessage('Oops!, Account not found');
+                Message.setSuccessMessage('Account found');
+            } catch (e) {
+                Message.setErrorMessage('Oops! Account not found');
+            }
+            return;
         }
+        Message.setErrorMessage('Oops! This is your account id');
     };
 
     getPayee = async (event) => {
