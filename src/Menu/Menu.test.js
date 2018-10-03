@@ -15,7 +15,7 @@ describe('Menu', () => {
 
     it('should has four routes', () => {
       const menu = renderMenu();
-      expect(menu.find('Route').length).toEqual(4);
+      expect(menu.find('Route').length).toEqual(5);
     });
 
     it('should has dashboard route', () => {
