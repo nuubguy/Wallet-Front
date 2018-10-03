@@ -3,6 +3,7 @@ import Loginform from "./LoginForm";
 import AccountService from "../Api/AccountService";
 import Constant from "../Utilities/Constant";
 import Endpoint from "../Api/Endpoint";
+import Menu from "../Menu/Menu";
 
 //TODO create paging for transaction and save description for sorting
 
@@ -10,9 +11,9 @@ export default class LoginPageContainer extends Component {
     constructor() {
         super();
         this.state = {
-            username:'',
-            password:'',
-
+            username: '',
+            password: '',
+            redirect: false
         };
     }
 
@@ -21,16 +22,16 @@ export default class LoginPageContainer extends Component {
     }
 
 
-    changeUsername= (input) =>{
-        console.log(input)
+    changeUsername = (input) => {
+        console.log(input);
         this.setState(
             {
                 username: input
             }
         )
-    }
+    };
 
-    changePassword= (input) =>{
+    changePassword = (input) => {
         console.log(input);
         this.setState(
             {
@@ -39,41 +40,38 @@ export default class LoginPageContainer extends Component {
         )
     }
 
-
-
     render() {
+        if (this.state.redirect) {
+            return <Menu/>
+        }
         return (
             <section>
-                <Loginform username={this.state.username} password={this.state.password}
-                           changeUsername={this.changeUsername} changePassword={this.changePassword}
-                onSubmit={this.onSubmit}/>
+                <Loginform
+                    username={this.state.username} password={this.state.password}
+                    changeUsername={this.changeUsername} changePassword={this.changePassword}
+                    onSubmit={this.onSubmit}
+                />
             </section>
-    );
+        );
     }
 
-    onSubmit= (e) =>{
+    onSubmit = (e) => {
+        this.setState({redirect: true});
         e.preventDefault();
-        this.fetchData(this.state.username,this.state.password);
+        this.fetchData(this.state.username, this.state.password);
+    };
 
-        this.setState({
-            username:'',
-            password:'',
-        })
-
-
-    }
-
-    async fetchData(username,password){
+    async fetchData(username, password) {
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
-
         try {
-            let result = await service.getAccountProfile(username,password)
-            console.log(result)
-        }catch (e) {
+            let result = await service.getAccountProfile(username, password);
+            console.log(result);
+            localStorage.setItem("customerId", username);
+            localStorage.setItem("password", password);
+            localStorage.setItem("accountId", result.data.accountList[0].accountId);
+
+        } catch (e) {
             console.log(e);
         }
-
-
     }
-
 }

@@ -2,19 +2,24 @@ import axios from 'axios';
 import Constant from '../Utilities/Constant';
 
 export default class AccountService {
-  constructor(customerId, accountId, baseUrl) {
+  constructor(customerId, accountId, baseUrl, auth) {
     this.customerId = customerId;
     this.accountId = accountId;
     this.baseUrl = baseUrl;
   }
 
   async getAccount() {
-    const accountId = this.accountId;
-    const customerId = this.customerId;
+    const accountId = localStorage.getItem('accountId');
+    const customerId = localStorage.getItem('customerId');
     const baseUrl = this.baseUrl;
     const balanceUrl = `${baseUrl}/customers/${customerId}/accounts/${accountId}`;
     try {
-      const result = await AccountService.axiosGet(balanceUrl);
+      const result = await AccountService.axiosGet(balanceUrl, {
+        auth: {
+          username: localStorage.getItem('customerId'),
+          password: localStorage.getItem('password'),
+        },
+      });
       this.account = result.data;
       return result;
     } catch (error) {
@@ -22,29 +27,33 @@ export default class AccountService {
     }
   }
 
-  static axiosGet(url) {
-    return axios.get(url);
+  static axiosGet(url, cred) {
+    return axios.get(url, cred);
   }
 
-    getAccountProfile(customerId,password){
-      const getCustomerUrl = `/customers/C00000001`;
-          const result = axios.get(getCustomerUrl,{
-              auth: {
-                  username: "C00000001",
-                  password: "P@ssw0rd",
-              }
-          });
-          this.account = result.data;
+  getAccountProfile(customerId, password) {
+    const getCustomerUrl = `/customers/${customerId}`;
+    const result = axios.get(getCustomerUrl, {
+      auth: {
+        username: customerId,
+        password,
+      },
+    });
+    this.account = result.data;
 
-          return result;
-
+    return result;
   }
 
   getLastFiveTransactionList() {
-    const accountId = this.accountId;
+    const accountId = localStorage.getItem('accountId');
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&limitResultFromLatest=5`;
-    return axios.get(transactionListUrl).then(response => ({
+    return axios.get(transactionListUrl, {
+      auth: {
+        username: localStorage.getItem('customerId'),
+        password: localStorage.getItem('password'),
+      },
+    }).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
         function getTransactionType(item) {
@@ -88,14 +97,19 @@ export default class AccountService {
 
 
   getAllTransactionList(sort) {
-    const accountId = this.accountId;
+    const accountId = localStorage.getItem('accountId');
     const baseUrl = this.baseUrl;
     let transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&limitResultFromLatest=&description=&amount=&status=${sort}`;
     if (sort === 0) {
       transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&limitResultFromLatest=&description=&amount=&status=`;
     }
 
-    return axios.get(transactionListUrl).then(response => ({
+    return axios.get(transactionListUrl, {
+      auth: {
+        username: localStorage.getItem('customerId'),
+        password: localStorage.getItem('password'),
+      },
+    }).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
         function getTransactionType(item) {
@@ -139,11 +153,14 @@ export default class AccountService {
 
 
   getTransactionListBasedOnDescription(description, sort) {
-    const accountId = this.accountId;
+    const accountId = localStorage.getItem('accountId');
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&
     limitResultFromLatest=&description=${description}&amount=&status=${sort}`;
-    return axios.get(transactionListUrl).then(response => ({
+    return axios.get(transactionListUrl,{auth: {
+            username: localStorage.getItem('customerId'),
+            password: localStorage.getItem('password'),
+        },}).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
         function getTransactionType(item) {
@@ -186,11 +203,14 @@ export default class AccountService {
   }
 
   getTransactionListBasedOnAmount(amount, sort) {
-    const accountId = this.accountId;
+    const accountId = localStorage.getItem('accountId');
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&
     limitResultFromLatest=&description=&amount=${parseFloat(amount)}&status=${sort}`;
-    return axios.get(transactionListUrl).then(response => ({
+    return axios.get(transactionListUrl,{auth: {
+            username: localStorage.getItem('customerId'),
+            password: localStorage.getItem('password'),
+        },}).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
         function getTransactionType(item) {
@@ -233,11 +253,14 @@ export default class AccountService {
   }
 
   getTransactionListBasedOnAmountAndDescription(amount, description) {
-    const accountId = this.accountId;
+    const accountId = localStorage.getItem('accountId');
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&
     limitResultFromLatest=&description=${description}&amount=${amount}`;
-    return axios.get(transactionListUrl).then(response => ({
+    return axios.get(transactionListUrl,{auth: {
+            username: localStorage.getItem('customerId'),
+            password: localStorage.getItem('password'),
+        },}).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
         function getTransactionType(item) {

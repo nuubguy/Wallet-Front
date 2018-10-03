@@ -35,7 +35,7 @@ export default class DetailTransactionContainer extends Component {
 
 
     inputValidation() {
-        const service = new AccountService(Customer.id(), Customer.accountId(), Endpoint.baseUrl());
+        const service = new AccountService(Customer.id(), Customer.accountId(), Endpoint.baseUrl(), );
         let transactions = service.getAllTransactionList(this.state.sort);
         if (this.state.description !== '' && this.state.amount === '') {
             transactions = service.getTransactionListBasedOnDescription(this.state.description, this.state.sort)
