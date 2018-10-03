@@ -1,25 +1,36 @@
+
 #login-box {
     margin: auto;
     width: 50%;
-    background-color: #FFFFFF;
+    background-color: #0fb9b1;
     padding: 10px;
     text-align: center;
 }
 
+#login-box {
+    margin-top: 100px;
+}
+
+#logo {
+    width: 100px;
+    height: 100px;
+}
+
 #username, #password, #login-button {
     outline: none;
+    background-color: #0d4745;
+    color: #FFFFFF;
     margin: 1em;
     font-size: 13px;
     border-radius: 4px;
-    border: 1px solid #777777;;
-    color: #444444;
+    border: 1px solid #777777;
     padding: 12px 10px;
     -webkit-transition: 0.5s;
 }
 
 #login-button {
-    background-color: #33ad41;
-    border: 1px solid #33ad41;
+    background-color: #2980b6;
+    border: 1px solid #2980b6;
     color: #FFFFFF;
 }
 
