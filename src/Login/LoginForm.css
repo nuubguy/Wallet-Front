@@ -37,8 +37,3 @@
 #username:focus, #password:focus {
     border: 1px solid #0fb9b1;
 }
-
-::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #FFFFFF;
-    opacity: 1; /* Firefox */
-}
