@@ -1,18 +1,16 @@
-import React, {Component} from 'react';
-import Menu from "./Menu/Menu";
-import {BrowserRouter as Router} from 'react-router-dom';
-import Authenticate from "./Api/Authenticate";
+import React, { Component } from 'react';
+import { BrowserRouter as Router } from 'react-router-dom';
+import LoginPageContainer from "./Login/LoginPageContainer";
 
 class App extends Component {
+  render() {
 
-    render() {
-        let auth = new Authenticate("use","","")
-        return (
-            <Router>
-                <Menu/>
-            </Router>
-        );
-    }
+    return (
+      <Router>
+        <LoginPageContainer />
+      </Router>
+    );
+  }
 }
 
 export default App;

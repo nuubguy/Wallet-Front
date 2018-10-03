@@ -1,0 +1,28 @@
+#login-box {
+    margin: auto;
+    width: 50%;
+    background-color: #FFFFFF;
+    padding: 10px;
+    text-align: center;
+}
+
+#username, #password, #login-button {
+    outline: none;
+    margin: 1em;
+    font-size: 13px;
+    border-radius: 4px;
+    border: 1px solid #777777;;
+    color: #444444;
+    padding: 12px 10px;
+    -webkit-transition: 0.5s;
+}
+
+#login-button {
+    background-color: #33ad41;
+    border: 1px solid #33ad41;
+    color: #FFFFFF;
+}
+
+#username:focus, #password:focus {
+    border: 1px solid #0fb9b1;
+}
