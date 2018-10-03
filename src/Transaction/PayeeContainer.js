@@ -17,12 +17,12 @@ export default class PayeeContainer extends Component {
                 accountId: '',
                 customerName: '',
             },
+            customer: {},
             canSubmit: 'cannot-submit'
         };
     }
 
     render() {
-        console.log(this.state);
         return (
             <div>
                 <Notifications/>
@@ -47,9 +47,9 @@ export default class PayeeContainer extends Component {
         let payee = Object.assign({}, this.state.payee);
         payee.accountId = accountId;
 
-        this.state.canSubmit = 'cannot-submit';
+        this.setState({canSubmit : 'cannot-submit'});
         if (accountId.length === 9) {
-            this.state.canSubmit = 'can-submit';
+            this.setState({canSubmit : 'can-submit'});
         }
 
         this.setState({payee});
@@ -67,21 +67,48 @@ export default class PayeeContainer extends Component {
             payee.customerName = response.data.customerName;
 
             this.setState({payee});
-            this.addNewPayee();
+
+            let payees = this.constructPayees();
+            this.addNewPayee(payees);
         } catch (e) {
             Message.setErrorMessage(Constant.errorAddPayee());
         }
     };
 
-    async addNewPayee() {
+    constructPayees() {
+        let payees = [];
+        for(let i = 0; i < this.state.customer.payees.length; i++) {
+            payees.push(this.state.customer.payees[i].representation);
+        }
+
+        let payeeAlreadyExist = false;
+        for(let i = 0; i < this.state.customer.payees.length; i++) {
+            let payeeAccountId = this.state.customer.payees[i].accountId;
+            let newPayeeAccountId = this.state.payee.accountId;
+            if(payeeAccountId === newPayeeAccountId) {
+                payeeAlreadyExist = true;
+            }
+        }
+
+        if(!payeeAlreadyExist) {
+            payees.push(this.state.payee);
+        }
+
+        return payees;
+    }
+
+    async addNewPayee(payees) {
+        console.log(payees);
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
         try {
-            await service.putPayee(this.state.payee);
+            await service.putPayee(this.state.customer.payees);
             Message.setSuccessMessage(Constant.successAddPayee());
             this.refresh();
         } catch (e) {
             Message.setErrorMessage(Constant.errorAddPayee());
         }
+
+        this.componentDidMount();
     }
 
     refresh() {
@@ -95,5 +122,12 @@ export default class PayeeContainer extends Component {
 
     componentDidMount() {
         this.refresh();
+        this.getCustomerData();
     }
+
+    async getCustomerData() {
+        const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
+        const response = await service.getAccount();
+        this.setState({customer: response.data});
+    };
 }
