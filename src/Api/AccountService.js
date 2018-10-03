@@ -43,14 +43,30 @@ export default class AccountService {
           }
         }
 
-        console.log(item);
+        function getSubTransactionType(item) {
+          if (item.credit.accountId === accountId) {
+            if (item.debit.accountId !== 'CASH ACCOUNT') {
+              return `From ${item.debit}${item.debit.customer}`;
+            }
+            return '';
+          }
+
+          if (item.debit.accountId === accountId) {
+            if (item.credit.accountId !== 'CASH ACCOUNT' || item.credit !== 'CASH ACCOUNT') {
+              return `To ${item.credit}-${item.credit.customer}`;
+            }
+            return '';
+          }
+        }
+
         return {
           transactionId: item.transactionId,
-          type: getTransactionType(item).toUpperCase(),
+          type: getTransactionType(item),
           dateTime: item.dateTime,
           amount: item.transactionAmount.amount,
           currency: item.transactionAmount.currency,
           description: item.description === '' ? '-' : item.description,
+          subType: getSubTransactionType(item),
         };
       }),
     }));
@@ -70,21 +86,38 @@ export default class AccountService {
       data: response.data.map((item) => {
         function getTransactionType(item) {
           if (item.credit === accountId || item.credit.accountId === accountId) {
-            return 'credit';
+            return Constant.credit();
           }
 
           if (item.debit === accountId || item.debit.accountId === accountId) {
-            return 'debit';
+            return Constant.debit();
+          }
+        }
+
+        function getSubTransactionType(item) {
+          if (item.credit.accountId === accountId) {
+            if (item.debit.accountId !== 'CASH ACCOUNT') {
+              return `From ${item.debit}${item.debit.customer}`;
+            }
+            return '';
+          }
+
+          if (item.debit.accountId === accountId) {
+            if (item.credit.accountId !== 'CASH ACCOUNT' || item.credit !== 'CASH ACCOUNT') {
+              return `To ${item.credit}-${item.credit.customer}`;
+            }
+            return '';
           }
         }
 
         return {
           transactionId: item.transactionId,
-          type: getTransactionType(item).toUpperCase(),
+          type: getTransactionType(item),
           dateTime: item.dateTime,
           amount: item.transactionAmount.amount,
           currency: item.transactionAmount.currency,
           description: item.description === '' ? '-' : item.description,
+          subType: getSubTransactionType(item),
         };
       }),
     }));

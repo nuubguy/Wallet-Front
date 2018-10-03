@@ -16,11 +16,11 @@ export default class Constant {
   }
 
   static debit() {
-    return 'debit';
+    return 'TRANSFER';
   }
 
   static credit() {
-    return 'credit';
+    return 'TOP UP';
   }
 
   static minimumTransaction() {
