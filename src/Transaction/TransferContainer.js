@@ -68,19 +68,23 @@ export default class TransferContainer extends Component {
         let payees = this.state.sender.payees;
         let transaction = Object.assign({}, this.state.transaction);
 
-        for (let i = 0; i < payees.length; i++) {
-            let accountId = payees[i].accountId;
+        if(payees.length > 0) {
+            for (let i = 0; i < payees.length; i++) {
+                let accountId = payees[i].accountId;
+                console.log(accountId);
+                console.log(targetPayee);
 
-            if (targetPayee === accountId) {
-                console.log(payees[i].representation.customerName);
-                transaction.canFillForm = 'can-fill-form';
-                transaction.payeeName = payees[i].representation.customerName;
-                this.setState({transaction});
-                return;
+                if (targetPayee === accountId) {
+                    console.log(payees[i].representation.customerName);
+                    transaction.canFillForm = 'can-fill-form';
+                    transaction.payeeName = payees[i].representation.customerName;
+                    this.setState({transaction});
+                    return;
+                }
             }
-            let color = {background: '#EB4D4B', text: "#FFFFFF"};
-            notify.show("Payee is not linked with your account", 'custom', 3000, color);
         }
+        let color = {background: '#EB4D4B', text: "#FFFFFF"};
+        notify.show("Payee is not linked with your account", 'custom', 3000, color);
     };
 
     onAmountChange = (amount) => {
