@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Constant from '../Utilities/Constant';
 
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 export default class AccountService {
   constructor(customerId, accountId, baseUrl) {
     this.customerId = customerId;
