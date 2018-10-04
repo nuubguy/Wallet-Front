@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Route, Redirect } from 'react-router-dom';
+import { Link, Route } from 'react-router-dom';
 import DashboardContainer from '../Dashboard/DashboardContainer';
 import TransactionContainer from '../Transaction/TransactionContainer';
 import './Menu.css';
@@ -13,6 +13,12 @@ import PayeeContainer from '../Transaction/PayeeContainer';
  */
 
 export default class Menu extends Component {
+
+  static logout() {
+    localStorage.clear();
+    window.location.reload();
+  };
+
   render() {
     return (
       <div>
@@ -31,12 +37,20 @@ export default class Menu extends Component {
               <Link to="/transfer" className="link"> Transfer</Link>
             </li>
             <li className="menu">
-              <img src={imageResource.TRANSACTION_HISTORY} alt="transaction-history" className="menu-item" />
+              <img
+                src={imageResource.TRANSACTION_HISTORY}
+                alt="transaction-history"
+                className="menu-item"
+              />
               <Link to="/history" className="link"> Transaction History</Link>
             </li>
             <li className="menu">
               <img src={imageResource.PAYEE} alt="transaction-history" className="menu-item" />
-              <Link to="/payee" className="link"> Payee</Link>
+              <Link to="/payee" className="link"> Add Payee</Link>
+            </li>
+            <li className="menu">
+              <img src={imageResource.LOGOUT} alt="transaction-history" className="menu-item" />
+              <button onClick={Menu.logout} id={"logout-button"}>Logout</button>
             </li>
           </ul>
         </header>

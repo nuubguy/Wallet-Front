@@ -10,7 +10,7 @@ describe('Menu', () => {
   describe('render', () => {
     it('should has five menu', () => {
       const menu = renderMenu();
-      expect(menu.find('li').length).toEqual(5);
+      expect(menu.find('li').length).toEqual(6);
     });
 
     it('should has four routes', () => {

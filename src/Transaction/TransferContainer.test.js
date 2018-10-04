@@ -1,9 +1,39 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import TransferContainer from './TransferContainer';
+import mockLocalStorage from '../___mock___/localStorage';
+import AccountService from '../Api/AccountService';
+
+beforeEach(() => {
+  mockLocalStorage();
+});
+
+jest.mock('../Api/AccountService');
 
 describe('TransactionContainer', () => {
   function renderTransferContainer() {
+    const respTransactions = [
+      {
+        transactionId: 'T00000007',
+        type: 'debit',
+        dateTime: '2018-09-15T16:22:04.601',
+        amount: 500000,
+        currency: 'IDR',
+      },
+    ];
+
+
+    const mockGetAllTransactionList = jest.fn(() => Promise.resolve({
+      status: 200,
+      data: respTransactions,
+    }));
+
+
+    mockGetAllTransactionList.mockClear();
+    AccountService.mockClear();
+    AccountService.mockImplementation(() => ({
+      getAccount: mockGetAllTransactionList,
+    }));
     return shallow(<TransferContainer transaction={{}} />);
   }
 

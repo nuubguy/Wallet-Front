@@ -1,8 +1,10 @@
 import axios from 'axios';
 import Constant from '../Utilities/Constant';
 
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
 export default class AccountService {
-  constructor(customerId, accountId, baseUrl, auth) {
+  constructor(customerId, accountId, baseUrl) {
     this.customerId = customerId;
     this.accountId = accountId;
     this.baseUrl = baseUrl;
@@ -40,7 +42,6 @@ export default class AccountService {
       },
     });
     this.account = result.data;
-
     return result;
   }
 
@@ -58,7 +59,10 @@ export default class AccountService {
       data: response.data.map((item) => {
         function getTransactionType(item) {
           if (item.credit === accountId || item.credit.accountId === accountId) {
-            return Constant.credit();
+            if (getSubTransactionType(item).length === 0) {
+              return Constant.credit();
+            }
+            return `${Constant.debit()} from`;
           }
 
           if (item.debit === accountId || item.debit.accountId === accountId) {
@@ -69,14 +73,14 @@ export default class AccountService {
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `from ${item.debit.customer.name}-${item.debit.accountId}`;
+              return `${item.debit.customer.name}-${item.debit.accountId}`;
             }
             return '';
           }
 
           if (item.debit.accountId === accountId) {
             if (item.credit.accountId !== 'CASH ACCOUNT' || item.credit !== 'CASH ACCOUNT') {
-              return `to ${item.credit.accountId}-${item.credit.customer.name}`;
+              return `to ${item.credit.customer.name}-${item.credit.accountId}`;
             }
             return '';
           }
@@ -114,7 +118,10 @@ export default class AccountService {
       data: response.data.map((item) => {
         function getTransactionType(item) {
           if (item.credit === accountId || item.credit.accountId === accountId) {
-            return Constant.credit();
+            if (getSubTransactionType(item).length === 0) {
+              return Constant.credit();
+            }
+            return `${Constant.debit()} from`;
           }
 
           if (item.debit === accountId || item.debit.accountId === accountId) {
@@ -125,7 +132,7 @@ export default class AccountService {
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `from ${item.debit.customer.name}-${item.debit.accountId}`;
+              return `${item.debit.customer.name}-${item.debit.accountId}`;
             }
             return '';
           }
@@ -157,26 +164,31 @@ export default class AccountService {
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&
     limitResultFromLatest=&description=${description}&amount=&status=${sort}`;
-    return axios.get(transactionListUrl,{auth: {
-            username: localStorage.getItem('customerId'),
-            password: localStorage.getItem('password'),
-        },}).then(response => ({
+    return axios.get(transactionListUrl, {
+      auth: {
+        username: localStorage.getItem('customerId'),
+        password: localStorage.getItem('password'),
+      },
+    }).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
-          function getTransactionType(item) {
-              if (item.credit === accountId || item.credit.accountId === accountId) {
-                  return Constant.credit();
-              }
-
-              if (item.debit === accountId || item.debit.accountId === accountId) {
-                  return Constant.debit();
-              }
+        function getTransactionType(item) {
+          if (item.credit === accountId || item.credit.accountId === accountId) {
+            if (getSubTransactionType(item).length === 0) {
+              return Constant.credit();
+            }
+            return `${Constant.debit()} from`;
           }
+
+          if (item.debit === accountId || item.debit.accountId === accountId) {
+            return Constant.debit();
+          }
+        }
 
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `from ${item.debit.customer.name}-${item.debit.accountId}`;
+              return `${item.debit.customer.name}-${item.debit.accountId}`;
             }
             return '';
           }
@@ -191,7 +203,7 @@ export default class AccountService {
 
         return {
           transactionId: item.transactionId,
-          type: getTransactionType(item).toUpperCase(),
+          type: getTransactionType(item),
           dateTime: item.dateTime,
           amount: item.transactionAmount.amount,
           currency: item.transactionAmount.currency,
@@ -207,26 +219,31 @@ export default class AccountService {
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&
     limitResultFromLatest=&description=&amount=${parseFloat(amount)}&status=${sort}`;
-    return axios.get(transactionListUrl,{auth: {
-            username: localStorage.getItem('customerId'),
-            password: localStorage.getItem('password'),
-        },}).then(response => ({
+    return axios.get(transactionListUrl, {
+      auth: {
+        username: localStorage.getItem('customerId'),
+        password: localStorage.getItem('password'),
+      },
+    }).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
-          function getTransactionType(item) {
-              if (item.credit === accountId || item.credit.accountId === accountId) {
-                  return Constant.credit();
-              }
-
-              if (item.debit === accountId || item.debit.accountId === accountId) {
-                  return Constant.debit();
-              }
+        function getTransactionType(item) {
+          if (item.credit === accountId || item.credit.accountId === accountId) {
+            if (getSubTransactionType(item).length === 0) {
+              return Constant.credit();
+            }
+            return `${Constant.debit()} from`;
           }
+
+          if (item.debit === accountId || item.debit.accountId === accountId) {
+            return Constant.debit();
+          }
+        }
 
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `from ${item.debit.customer.name}-${item.debit.accountId}`;
+              return `${item.debit.customer.name}-${item.debit.accountId}`;
             }
             return '';
           }
@@ -241,7 +258,7 @@ export default class AccountService {
 
         return {
           transactionId: item.transactionId,
-          type: getTransactionType(item).toUpperCase(),
+          type: getTransactionType(item),
           dateTime: item.dateTime,
           amount: item.transactionAmount.amount,
           currency: item.transactionAmount.currency,
@@ -257,26 +274,31 @@ export default class AccountService {
     const baseUrl = this.baseUrl;
     const transactionListUrl = `${baseUrl}/transactions/?accountId=${accountId}&
     limitResultFromLatest=&description=${description}&amount=${amount}`;
-    return axios.get(transactionListUrl,{auth: {
-            username: localStorage.getItem('customerId'),
-            password: localStorage.getItem('password'),
-        },}).then(response => ({
+    return axios.get(transactionListUrl, {
+      auth: {
+        username: localStorage.getItem('customerId'),
+        password: localStorage.getItem('password'),
+      },
+    }).then(response => ({
       status: response.status,
       data: response.data.map((item) => {
-          function getTransactionType(item) {
-              if (item.credit === accountId || item.credit.accountId === accountId) {
-                  return Constant.credit();
-              }
-
-              if (item.debit === accountId || item.debit.accountId === accountId) {
-                  return Constant.debit();
-              }
+        function getTransactionType(item) {
+          if (item.credit === accountId || item.credit.accountId === accountId) {
+            if (getSubTransactionType(item).length === 0) {
+              return Constant.credit();
+            }
+            return `${Constant.debit()} from`;
           }
+
+          if (item.debit === accountId || item.debit.accountId === accountId) {
+            return Constant.debit();
+          }
+        }
 
         function getSubTransactionType(item) {
           if (item.credit.accountId === accountId) {
             if (item.debit.accountId !== 'CASH ACCOUNT') {
-              return `from ${item.debit.customer.name}-${item.debit.accountId}`;
+              return `${item.debit.customer.name}-${item.debit.accountId}`;
             }
             return '';
           }
@@ -291,7 +313,7 @@ export default class AccountService {
 
         return {
           transactionId: item.transactionId,
-          type: getTransactionType(item).toUpperCase(),
+          type: getTransactionType(item),
           dateTime: item.dateTime,
           amount: item.transactionAmount.amount,
           currency: item.transactionAmount.currency,
@@ -303,13 +325,14 @@ export default class AccountService {
   }
 
   postTransaction(transaction) {
+    const accountId = localStorage.getItem('accountId');
     const headers = {
       'Content-Type': 'application/json',
     };
 
     const getTransactionType = (transactionType, targetType) => {
       if (transactionType === targetType) {
-        return this.accountId;
+        return accountId;
       }
       return '';
     };
@@ -353,13 +376,14 @@ export default class AccountService {
   }
 
   postTransfer(transaction, payee) {
+    const accountId = localStorage.getItem('accountId');
     const headers = {
       'Content-Type': 'application/json',
     };
 
 
     const transferRequest = {
-      debitAccountId: this.accountId,
+      debitAccountId: accountId,
       creditAccountId: payee,
       transactionId: null,
       dateTime: null,
@@ -410,8 +434,8 @@ export default class AccountService {
 
   putPayee(payees) {
     console.log(payees);
-    const customerId = this.customerId;
-    const accountId = this.accountId;
+    const accountId = localStorage.getItem('accountId');
+    const customerId = localStorage.getItem('customerId');
 
     const headers = {
       'Content-Type': 'application/json',

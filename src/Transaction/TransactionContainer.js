@@ -5,8 +5,9 @@ import Endpoint from "../Api/Endpoint";
 import imageResource from "../Resource/Resource.js";
 import Transaction from "./Transaction";
 import './TransactionContainer.css'
-import Notifications, {notify} from 'react-notify-toast';
+import Notifications from 'react-notify-toast';
 import {Route} from "react-router-dom";
+import Message from "../Utilities/Message";
 
 
 export default class TransactionContainer extends Component {
@@ -124,8 +125,7 @@ export default class TransactionContainer extends Component {
                 response.status = "Your withdrawal code is " + response.withdrawalCode;
             }
 
-            let color = { background: '#76daff', text: "#FFFFFF" };
-            notify.show(response.status, 'custom', 5000, color);
+            Message.setSuccessMessage(response.status);
 
             this.setState({transaction: {type: '', amount: '', description: '', canSubmit: 'cannot-submit'}});
             this.setState({response: response});
@@ -137,8 +137,7 @@ export default class TransactionContainer extends Component {
             response.display = true;
             response.withdrawalCode = '';
 
-            let color = { background: '#EB4D4B', text: "#FFFFFF" };
-            notify.show(response.status + ", " + response.message, 'custom', 5000, color);
+            Message.setErrorMessage(response.status + ", " + response.message);
 
             this.setState({response: response});
         }

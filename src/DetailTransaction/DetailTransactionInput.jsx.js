@@ -41,7 +41,7 @@ export default class DetailTransactionInput extends Component {
     );
   }
   imageSort = (sort) =>{
-      if(sort === 1) {
+      if(sort === 2) {
           return (
               <img
                   src={Resource.ARROW_UP}

@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import Loginform from "./LoginForm";
+import Login from "./Login";
 import AccountService from "../Api/AccountService";
 import Constant from "../Utilities/Constant";
 import Endpoint from "../Api/Endpoint";
 import Menu from "../Menu/Menu";
+import './Login.css'
 
 //TODO create paging for transaction and save description for sorting
 
-export default class LoginPageContainer extends Component {
+export default class LoginContainer extends Component {
     constructor() {
         super();
         this.state = {
@@ -17,53 +18,36 @@ export default class LoginPageContainer extends Component {
         };
     }
 
-    async componentDidMount() {
-
-    }
-
-
-    changeUsername = (input) => {
-        console.log(input);
-        this.setState(
-            {
-                username: input
-            }
-        )
+    onUsernameChange = (input) => {
+        this.setState({username: input});
     };
 
-    changePassword = (input) => {
-        console.log(input);
-        this.setState(
-            {
-                password: input
-            }
-        )
-    }
+    onPasswordChange = (input) => {
+        this.setState({password: input});
+    };
 
     render() {
         if (this.state.redirect) {
-            return <Menu onLogout={this.onLogout}/>
+            return <Menu />
         }
         return (
-            <section>
-                <Loginform
+            <section id={"login-section"}>
+                <div id={"login-title"}>
+                    <h1>Login</h1>
+                </div>
+                <Login
                     username={this.state.username} password={this.state.password}
-                    changeUsername={this.changeUsername} changePassword={this.changePassword}
+                    onUsernameChange={this.onUsernameChange}
+                    onPasswordChange={this.onPasswordChange}
                     onSubmit={this.onSubmit}
                 />
             </section>
         );
     }
 
-    onLogout = () => {
-        localStorage.clear();
-        this.setState({
-            redirect: false
-        })
-    }
     onSubmit = (e) => {
-        this.setState({redirect: true});
         e.preventDefault();
+        this.setState({redirect: true});
         this.fetchData(this.state.username, this.state.password);
     };
 
@@ -71,7 +55,6 @@ export default class LoginPageContainer extends Component {
         const service = new AccountService(Constant.id(), Constant.accountId(), Endpoint.baseUrl());
         try {
             let result = await service.getAccountProfile(username, password);
-            console.log(result);
             localStorage.setItem("customerId", username);
             localStorage.setItem("password", password);
             localStorage.setItem("accountId", result.data.accountList[0].accountId);

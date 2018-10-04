@@ -6,6 +6,7 @@ import imageResource from "../Resource/Resource.js";
 import './TransactionContainer.css'
 import Transfer from "./Transfer";
 import Notification, {notify} from "react-notify-toast";
+import Message from "../Utilities/Message";
 
 /*
     This class represent logic to serve withdraw and top up page
@@ -162,8 +163,7 @@ export default class TransferContainer extends Component {
             response.message = "please kindly check your balance";
             response.display = true;
 
-            let color = {background: '#76daff', text: "#FFFFFF"};
-            notify.show(response.status, 'custom', 5000, color);
+            Message.setSuccessMessage(response.status);
 
             this.setState({response: response});
             this.setState({
@@ -181,8 +181,7 @@ export default class TransferContainer extends Component {
             response.message = error.data.toLowerCase();
             response.display = true;
 
-            let color = {background: '#EB4D4B', text: "#FFFFFF"};
-            notify.show(response.status + ", " + response.message, 'custom', 5000, color);
+            Message.setErrorMessage(response.status + " " + response.message);
 
             this.setState({response: response});
         }

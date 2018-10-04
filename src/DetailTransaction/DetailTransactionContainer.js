@@ -102,9 +102,8 @@ export default class DetailTransactionContainer extends Component {
     };
 
     imageOnClick = () => {
-        this.setState({
-            sort: (this.state.sort !== 1) ? 1 : 2,
-        });
+
+        this.state.sort =(this.state.sort !== 1) ? 1 : 2
         console.log(this.state.sort);
         this.componentDidMount();
     }

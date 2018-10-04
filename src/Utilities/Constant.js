@@ -36,6 +36,6 @@ export default class Constant {
   }
 
   static errorAddPayee() {
-    return 'Oops!, Account not found';
+    return 'Oops! Account not found';
   }
 }
