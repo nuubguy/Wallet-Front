@@ -55,7 +55,9 @@ export default class Menu extends Component {
           </ul>
         </header>
 
-        <Route path="/dashboard" render={() => (<DashboardContainer />)} />
+        <Route path="/dashboard" render={
+          () => (<DashboardContainer />)
+          } />
         <Route path="/transaction" render={() => (<TransactionContainer />)} />
         <Route path="/transfer" render={() => (<TransferContainer />)} />
         <Route path="/history" render={() => (<DetailTransactionContainer />)} />

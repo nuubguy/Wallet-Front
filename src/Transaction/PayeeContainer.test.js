@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import PayeeContainer from './PayeeContainer';
-import axios from '../___mock___/axios';
+import axios from '../../../../../../../Homebase reactJs/src/__mock__/axios';
 import mockLocalStorage from '../___mock___/localStorage';
 import AccountService from '../Api/AccountService';
 

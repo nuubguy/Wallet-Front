@@ -4,7 +4,8 @@ import TransactionList from './TransactionList';
 
 describe('Transaction', () => {
   function renderTransactionList() {
-    return shallow(<TransactionList transactions={[]} />);
+    return shallow(<TransactionList transactions={[]} />
+    );
   }
 
   describe('render', () => {
